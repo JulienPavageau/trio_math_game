@@ -1,0 +1,83 @@
+
+ul.yetii {
+    font-size: 0 !important;
+    height: 30px !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+ul.yetii li {
+    display: inline !important;
+    margin: 0 3px 0 0 !important;
+    padding: 0 !important;
+}
+ul.yetii li a {
+    -moz-border-bottom-colors: none !important;
+    -moz-border-left-colors: none !important;
+    -moz-border-right-colors: none !important;
+    -moz-border-top-colors: none !important;
+/*     background: url(/yetii/tabbg.gif) repeat-x scroll 0 0 #F0F0F0 !important; */
+    background: none repeat scroll 0 0 #F0F0F0 !important;
+    border-color: #CCCCCC #CCCCCC -moz-use-text-color !important;
+    border-image: none !important;
+    border-radius: 3px 3px 0 0 !important;
+    border-style: solid solid none !important;
+    border-width: 1px 1px medium !important;
+    color: #222222 !important;
+    display: inline-block !important;
+    font: 12px/30px Verdana !important;
+    outline: medium none !important;
+    padding: 0 16px !important;
+    position: relative !important;
+    text-decoration: none !important;
+}
+ul.yetii li a:link, ul.yetii li a:visited {
+    color: #222222 !important;
+}
+ul.yetii li a:hover {
+/* background: url(/yetii/tabbg.gif) repeat-x scroll 0 -36px #F0F0F0 !important; */
+    background: none repeat scroll 0 -36px #F0F0F0 !important;
+    border-color: #DDDDDD !important;
+}
+ul.yetii li.activeli a {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    border-color: #DDDDDD !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+    z-index: 3 !important;
+}
+
+ul.yetii li.activeli a:hover {
+    text-decoration: none !important;
+}
+
+/*ajout pour active et selected*/
+ul.yetii a.active {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    color: #0000FF !important;
+    cursor: default !important;
+    padding-bottom: 0px !important;
+}
+ul.yetii a.selected  {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    border-color: #DDDDDD !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+    z-index: 3 !important;
+}
+
+.tab-container div.tab {
+    background-color: #FFFFFF !important;
+    border: 1px solid #DDDDDD !important;
+    border-radius: 0 4px 4px !important;
+    margin: 0 !important;
+    padding: 30px !important;
+    position: relative !important;
+}
+/*div.tab > div {
+    display: block !important;
+    margin: 0 !important;
+    padding: 30px 26px !important;
+}*/
+
