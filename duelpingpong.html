@@ -1,0 +1,1284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" >
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="trio jeu calcul mental" />
+		<meta name="author" content="J. Pavageau" />
+		<meta name="description" content="Jeu de calcul mental en ligne" />
+		<title>TRIO Duel Ping Pong</title>
+		<link href="favicon.png" rel="shortcut icon" type="" />
+		<link rel="stylesheet" href="trio.css" type="text/css" />
+		<link rel="stylesheet" href="yetii/yetii.css" type="text/css" />
+	</head>
+
+	<body >
+			<script src="yetii/yetii-min.js" type="text/javascript"></script>
+			<script src="jquery-3.2.1.min.js" type="text/javascript"></script>
+           
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div id="conteneur_mymodal" class="modal-content">
+    <span class="close">&times;</span>
+	<div id="contenu_mymodal"><p>Some text in the Modal..</p></div>
+  </div>
+</div>
+
+<div id="tab-container-1" class="tab-container">
+	<ul id="tab-container-1-nav" class="yetii">
+		<li><a href="#tab1">Paramètres de la partie</a></li>
+		<li><a href="#tab2">Options</a></li>
+		<li><a href="#tab3">Trios déjà validés</a></li>
+		<li><a href="#tab4">Mode d'emploi</a></li>
+	</ul>
+	<div class="tab" id="tab1">
+	<div style='width:900px;'><CENTER>
+		<FORM name='FormChoix'>
+		Plateau de <SELECT NAME='ListePlateaux' SIZE=1 onChange='ChangePlateau();'><OPTION SELECTED VALUE='7x7'>49 (7x7)<OPTION VALUE='9x9'>81 (9x9)</SELECT>
+		nombres <SELECT NAME='ListeNombres' SIZE=1 onChange='ChangeNombres();'><OPTION SELECTED VALUE='postitifs'>entiers de 1 à 9<OPTION VALUE='relatifs'>entiers relatifs</SELECT>
+		et des cibles <SELECT NAME='ListeLimitesCibles' SIZE=1 onChange='ChangeLimiteCibles();'><OPTION SELECTED VALUE='50'>jusqu'à 50<OPTION VALUE='90'>jusqu'à 90</SELECT>
+		qui se déplacent à une vitesse <SELECT NAME='ListeVitesse' SIZE=1 onChange='ChangeVitesse();'><OPTION VALUE='lente'>lente<OPTION SELECTED VALUE='moyenne'>moyenne<OPTION VALUE='rapide'>rapide</SELECT>.<BR/>
+		Le gagnant (les noms des joueurs peuvent être personnalisés) est celui des deux qui <SELECT NAME='ListeGagnant' SIZE=1><OPTION SELECTED VALUE='21points'>est le premier à atteindre 21 points<OPTION VALUE='15minutes'>a le meilleur score après 15 minutes</SELECT>.<BR/>
+		</i>(à l'exception du choix des nombres du plateau, tous les autres paramètres peuvent être changés en cours de partie sans recommencer)</i><BR/>
+		<input type="checkbox" name="form_immobiliser_cible" onchange="immobiliser_cible();"/>Cocher cette case pour remplacer le déplacement de la cible par une barre de progression qui attire moins l'attention.
+		</CENTER> </FORM></div>
+	</div>
+	<div class="tab" id="tab2">
+		<FORM name='FormConfig'>
+			<input type="checkbox" name="form_cacher_case_active" onchange="Effacer(); cacher_case_active = !cacher_case_active;" checked/>Les cases qui ne peuvent plus former de trio avec les nombres sélectionnés sont grisées.<br/>
+			<input type="checkbox" name="form_effacage_auto" onchange="effacage_auto = !effacage_auto; if (effacage_auto==false) { eviter_alert['erreur'] = false; }"checked/>L'effacement est déclenchée dès qu'une "mauvaise" case est cliquée (exemple : cliquer 2 fois sur un même nombre pour effacer).<br/>
+			<input type="checkbox" name="form_cochage_auto" onchange="cochage_auto = !cochage_auto;" checked/>Le 3ème nombre est automatiquement sélectionné quand il n'y a plus le choix (les deux nombres bleus sont séparés d'une case, ...).<br/>
+			<input type="checkbox" name="form_plusmoins_auto" onchange="Basculer_verification_automatiquement();" checked/>Le trio est automatiquement vérifié dès la sélection du 3ème nombre sans cliquer sur VERIFIER (+ ou - est automatiquement déterminé).<br/>
+			<input type="checkbox" name="form_cibles_possibles" onchange="Basculer_cibles_possibles_uniquement();" checked/>Les cibles proposées ont toujours au moins <INPUT type='text' name='min_cibles' size=2 value='4' onchange="if (cibles_possibles_uniquement) { ChercherCiblesPossibles(); }"> trio(s) présent(s) sur le plateau (voir ce <a href='javascript:VoirNombreTrios();'>tableau</a>).<br/>
+		</FORM>
+	</div>
+	<div class="tab" id="tab3">
+		<center><div id="divJeux" style="overflow:auto;width:850px; height:auto; ">&nbsp;</div></center><center><form name="form_divJeux"><input checked="checked" name="affichage" onchange="Change_form_divJeux();" type="checkbox" /><i>décocher cette case pour désactiver cet affichage qui pourrait ralentir le jeu quand la partie devient longue</i></form></center>
+	</div>
+	<div class="tab" id="tab4">
+	  <p align="justify" class="infotip-jck">
+		<u>Comment jouer au TRIO ?</u><br />
+		- le joueur qui a la main sélectionne les deux premiers nombres qui doivent être multipliés puis le troisième nombre qui sera additionné ou soustrait au résultat de cette multiplication.<br />
+		- il change, si nécessaire, le signe de la deuxième opération en cliquant sur le signe "+" ou "-" ("+/-" en début de partie).<br />
+		- puis il clique sur le bouton "VERIFIER" ; si <b>le résultat de l'opération est égale à la cible proposée alors son score augmente entre 3 et 0,5 point quand la cible est inférieure à 50 et entre 4 et 0,5 point si elle dépasse 50</b> (il est possible de changer de limite en cours de partie) et une nouvelle cible est proposée ; sinon les nombres sélectionnés sont effacés et la main passe à son adversaire.<br />
+	  </p>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var tabber1 = new Yetii({id: 'tab-container-1'});
+</script>                    
+<div id="divJeux" style="width:850px; height:10px; "></div>
+  <CENTER>
+  <INPUT type='button' value='COMMENCER UNE NOUVELLE PARTIE' onclick='partie_commencee = true;Recommencer();'>
+</CENTER>
+<div id="divJeux" style="width:850px; height:10px; "></div>
+
+<script language="JavaScript">
+
+// Fenêtre modale https://www.w3schools.com/howto/howto_css_modals.asp
+var modal = document.getElementById('myModal');
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function FermeModal() {modal.style.display = "none";}
+
+function alertbox( boxTitre , boxTexte , boxHauteur , boxLargeur )
+{  
+	if (!pauseBool) { mettre_en_pause(); }
+	document.getElementById("conteneur_mymodal").style.width = boxLargeur+"px" ;
+	document.getElementById("contenu_mymodal").innerHTML='<CENTER><B>'+boxTitre+'</B></CENTER><BR/>'+boxTexte+'<BR/><CENTER><input type="submit" name="valider" value="     OK     " onClick= "FermeModal();mettre_en_pause();";/></CENTER>' ;
+    modal.style.display = "block";
+}
+
+function fermeconfirmboxTRUE( fermeboxbool )
+{  
+	eviter_alert[fermeboxbool]=true;
+	if (fermeboxbool=="erreur") { effacage_auto=true; document.FormConfig.form_effacage_auto.checked = true; }
+	FermeModal();
+}
+
+function fermeconfirmboxFALSE( fermeboxbool )
+{  
+	eviter_alert[fermeboxbool]=false;
+	FermeModal();
+}
+
+function confirmbox( boxTitre , boxTexte , boxHauteur , boxLargeur , boxbool)
+{  
+	document.getElementById("conteneur_mymodal").style.width = boxLargeur+"px" ;
+	document.getElementById("contenu_mymodal").innerHTML = '<CENTER><B>'+boxTitre+'</B></CENTER><BR/>'+boxTexte+'<BR/><CENTER><input type="submit" name="valider" value="     OK     " onClick= "fermeconfirmboxFALSE(\''+boxbool+'\');"/> <input type="submit" name="valider" value=" ANNULER " onClick= "fermeconfirmboxTRUE(\''+boxbool+'\');"/></CENTER>' ;
+    modal.style.display = "block";
+}
+
+ chemin="trio_fichiers/";
+
+//prechargement des images
+var img1 = new Image();img1.src=chemin+"cadrea.gif";  
+var img2 = new Image();img2.src=chemin+"rond50.gif";  
+var img3 = new Image();img3.src=chemin+"plus.gif";  
+var img4 = new Image();img4.src=chemin+"moins.gif";  
+var img5 = new Image();img5.src=chemin+"rond60.gif";
+var img6 = new Image();img6.src=chemin+"rondv50.gif";
+var img7 = new Image();img7.src=chemin+"rondv60.gif";  
+var img8 = new Image();img8.src=chemin+"cache.gif";  
+  
+
+// ************** MES SCRIPTS **************
+// Auteur : Julien PAVAGEAU  
+// Dernière modification : 18/05/2017  
+
+// déclaration des variables globales
+  eviter_alert = new Array ;
+  eviter_alert["verification_ok_classique"] = false ; // pour concours et unpourtoutes je n'affiche que tous les 10 trios
+  eviter_alert["erreur"] = true ;
+  // si debut_plateau = 1 alors on remplace la ligne 0 et la colonne 0 par les en-tête de ligne0 et colonne0
+  debut_plateau = 1; ligne0 = "ABCDEFGHI"; colonne0 = "123456789";
+  fin_plateau = 7;t_case = 60;
+  nombres_relatifs = 0; // 0 pour n'avoir que des positifs et 1 pour avoir des relatifs
+  // pour le concours (à noter qu'il faut que debut_plateau soit à 1) : comme pour json et la sauvegarde sur le site c'est la même variante (cela devrait éviter d'avoir à toucher trop au scripts) qui servira pour tous les "Concours" je placerai un code dans Plateau[0][0] pour éviter de charger un concours qui n'existe plus
+//2014
+  contenu_div_jeux ="";
+  //contenu_div_historique ="<u>CIBLE = 27</u><br/> - J1 : pas de proposition<br/> - J2 : 2 x 3 ± 7 = ERREUR<br/> - J3 : 8 x 3 + 3 = 3 POINTS<br/><u>CIBLE = 27</u><br/> - J1 : pas de proposition<br/> - J2 : 2 x 3 ± 7 = ERREUR<br/> - J3 : 8 x 3 + 3 = 3 POINTS";
+  contenu_div_historique ="";
+  contenu_div_historique_debut ="";
+  partie_actuelle="Classique";
+  cacher_case_active = true;
+  // Pour cocher le 3ème nombre automatiquement quand il n'y a plus vraiment le choix après le deuxième
+  cochage_auto = true; nombre3_coche_auto = false;
+  // Nouvelles options d'ergonomie
+  effacage_auto = true;
+  verification_auto = true;
+  cibles_possibles_uniquement = true;
+  cible_immobile = false;
+  // on peut aller jusqu'à 90 mais il faut que le plateau contienne un alignement de trois 9
+  limite_default=true;
+  nombre_cible = new Array;
+  nombre_cible["Classique"]=Math.round((50)*Math.random());
+  // 0 au debut puis 1 qd 1er facteur choisi puis ... 3 qd terme choisi
+  etape=0;
+  score = new Array;
+  score[1]=0;
+  score[2]=0;
+// ["x_nombre1"] et ["y_nombre1"] contiennent x et y du 1er facteur ... ["y_nombre3"] ...
+  Operation = new Array;
+  // Operation[0] contient "+" ou "-" ou 0 au debut pour indiquer que le bouton n'a pas été cliqué
+  Operation[0]="0";
+// Jeux[partie_actuelle][0] contient le nombre de jeux validés, Jeux[partie_actuelle][1] est un tableau qui contient un tableau identique à Opération concernant le 1er jeu validé, Jeux[2] .... 2ème jeu validé....
+  Jeux = new Array;
+  Jeux["Classique"] = new Array;
+  Jeux["Classique"][0] = 0;
+  Repartition_originale = new Array;
+  Repartition_originale = [1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,9,9,9,9];
+  x_trio = 1;y_trio = 1;test_trio = 0;trio_montre = false;
+  contenu_div_operation = "<TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD height=10></TD></TR><TR valign='middle' align='center'><TD height=80 width=80 background='"+chemin+"fond80.gif'><span id='nombre1' style='font-size: 24pt'>?</span></TD></tr><TR valign='middle' align='center'><TD><img src='"+chemin+"fois.gif' border=0 width=80 height=42'></TD></tr><TR valign='middle' align='center'><TD height=80 width=80 background='"+chemin+"fond80.gif'><span id='nombre2' style='font-size: 24pt'>?</span></TD></tr><TR valign='middle' align='center'><TD><img src='"+chemin+"plusmoins.gif' border=0 width=80 height=50 onClick='plusmoinsClick(this);' name='image_plusmoins'></TD></tr><TR valign='middle' align='center'><TD height=80 width=80 background='"+chemin+"fond80_vert.gif'><span id='nombre3' style='font-size: 24pt'>?</span></TD></tr></tbody></table><br/><INPUT type='button' value='EFFACER' onclick='Effacer();'><INPUT type='button' value='VERIFIER' onclick='Verifier();'>";
+// ci-dessous les nouvelles variables pour le duel Ping Pong
+  horizontal = 11;
+  joueur = 1;
+  joueur_debut_manche = 1;
+  pauseBool = false;
+  partie_commencee = false;
+  vitesse = 20;
+  nb_point = 3.5;
+  contenu_points = "(+ 3 points)";
+  borne_inf = 1;borne_sup = 9;
+  nom_joueur = new Array;
+  nom_joueur[1]="  JOUEUR 1";
+  nom_joueur[2]="  JOUEUR 2";
+  temps_ecoule = 0;
+
+function change_nom_joueur(num_joueur) {
+  if (num_joueur == 1) {
+    nom_joueur[1] = document.Formnomjoueur1.nomjoueur1.value;
+  }
+  else {
+    nom_joueur[2] = document.Formnomjoueur2.nomjoueur2.value;
+  }
+}
+  
+function ajouter_5_min() {
+  temps_ecoule+=5;
+}
+
+function mettre_en_pause() {
+  if (pauseBool) {
+    pauseBool = false;
+    newImage = "url("+chemin+"vide.gif)";
+    document.getElementById("affichage_points").firstChild.nodeValue=contenu_points;
+    document.getElementById("affichage_resultat").firstChild.nodeValue=nombre_cible[partie_actuelle];
+    timer=setInterval("bouger_cible()", vitesse);
+  }
+  else {
+    pauseBool = true;
+    document.getElementById("affichage_points").firstChild.nodeValue="(+ ? points)";
+    document.getElementById("affichage_resultat").firstChild.nodeValue="?";
+    clearInterval(timer);
+        newImage = "url("+chemin+"pause.jpg)";
+
+  }
+    document.getElementById('div_grille').style.backgroundImage = newImage;
+}
+
+function bouger_cible() {
+  if ((horizontal >= 410) || (horizontal <= 10)) {
+    changer_joueur();
+  }
+  if (joueur == 2) { horizontal = horizontal-1; }
+  else { horizontal = horizontal+1; }
+  if (cible_immobile) { document.getElementById('TD_BARRE').style.width = Math.floor(480*horizontal/400-480/40)+"px"; }
+  else { document.getElementById('TD_CIBLE').style.width = horizontal+"px"; }
+}
+
+function immobiliser_cible() {
+  if (cible_immobile) {
+    cible_immobile = false;
+    document.getElementById('TD_BARRE').style.width = "0px";
+    document.getElementById('TD_CIBLE').style.width = horizontal+"px";
+  }
+  else {
+    cible_immobile = true;
+    document.getElementById('TD_BARRE').style.width = Math.floor(490*horizontal/400-490/40)+"px";
+    document.getElementById('TD_CIBLE').style.width = "210px";
+  }
+}
+
+function Repartition(plat) {
+  var Repartition_bis = new Array;
+  for (var i = 0; i <= 48; i++) {
+    Repartition_bis[i] = Math.floor(Math.random()*1000)*10+Repartition_originale[i];
+  }
+  Repartition_bis.sort();
+  for (var c = 1; c <= 7; c++) {
+    for (var l = 1; l <= 7; l++) {
+      plat[c][l] = Repartition_bis[c-1+7*(l-1)]% 10;
+    }
+  }
+}
+  
+function OperationVersChaine(OperationIn,ChaineOut) {
+  ChaineOut = OperationIn[0]+";"+OperationIn["x_nombre1"]+";"+OperationIn["y_nombre1"]+";"+OperationIn["x_nombre2"]+";"+OperationIn["y_nombre2"]+";"+OperationIn["x_nombre3"]+";"+OperationIn["y_nombre3"];
+}
+  
+function Limite_cible() {
+  if (limite_default) { return 50; }
+  else { return 90; }
+}
+
+// Gardée si un jour je veux faire un plateau de 0 à 5 par exemple pour les primaire
+//function bornes_change() {
+//  document.FormChoix.limite_cible_form.value = borne_sup*borne_sup+Math.abs(borne_sup);
+//  limite_default=false;
+//  RecommencerLesParties(2);  
+//  document.FormChoix.radio_limite_cible[1].checked = true;
+//}
+
+function CopierTableauOperation(TabOriginal,TabCopie) {
+  TabCopie[0] = TabOriginal[0];
+  TabCopie["x_nombre1"] = TabOriginal["x_nombre1"];
+  TabCopie["y_nombre1"] = TabOriginal["y_nombre1"];
+  TabCopie["x_nombre2"] = TabOriginal["x_nombre2"];
+  TabCopie["y_nombre2"] = TabOriginal["y_nombre2"];
+  TabCopie["x_nombre3"] = TabOriginal["x_nombre3"];
+  TabCopie["y_nombre3"] = TabOriginal["y_nombre3"];
+}
+
+function Initialisation() {
+// Resultat["Classique"][0][0] contient le nombre jeux validés ayant pour résultat 0 dans la variante "Classique", Resultat["Classique"][0][1] contient le numéro dans Jeux de cette combinaison ... jusqu'à au moins Resultat["Classique"][90]
+  Resultat = new Array;
+  Resultat["Classique"] = new Array;
+// Contient les nombres du plateau
+  Plateau = new Array;
+  Plateau["Classique"] = new Array;
+  Grille = new Array;
+  for (var c = 0; c <= 9; c++) {
+    Plateau["Classique"][c] = new Array;
+    Grille[c] = new Array;
+    for (var l = 0; l <= 9; l++) {
+    Grille[c][l]=false;
+    Plateau["Classique"][c][l]=Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.floor((9)*Math.random()+1);
+    // Resultat["Classique"] est initialisé ci-dessous de [-99] jusqu'à [99] même si on ne peut dépasser 9*9+9=90
+    Resultat["Classique"][l*10+c] = new Array;
+    Resultat["Classique"][l*10+c][0] = 0;
+    Resultat["Classique"][(-1)*(l*10+c)] = new Array;
+    Resultat["Classique"][(-1)*(l*10+c)][0] = 0;
+    }
+  }
+  if (cibles_possibles_uniquement) { ChercherCiblesPossibles(); }
+  nombre_cible["Classique"]=NouvelleCible();
+  if (debut_plateau == 1) { EnleverLigne0Colonne0(Plateau[partie_actuelle],Grille); }
+}
+
+function NouvelleCible() {
+  var newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((Limite_cible())*Math.random());
+  if (cibles_possibles_uniquement) {
+  var limite = Math.min(borne_sup*borne_sup+Math.abs(borne_sup),Limite_cible());
+  newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((limite)*Math.random());
+  var compteur = 0;
+  // une condition (présente aussi 10 lignes plus loin) a été ajoutée pour éviter qu'une cible ne tombe 2 fois
+  while (((CiblesPossibles[newcible]<document.FormConfig.min_cibles.value) || (Resultat[partie_actuelle][newcible][0]!=0)) && (compteur<(limite*limite))) {
+    compteur++;
+    newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((limite)*Math.random());
+    }
+  }
+  if (compteur==(limite*limite)) { // c'est un peu tiré par les cheveux mais si après beaucoup de tirage (nombre choisi arbitrairement ??? me souviens plus pourquoi limite*limite ??) on n'a pas trouvé la cible alors je donne la plus fréquente
+    var max_trios = 0;
+    for (var i = ((-1)*nombres_relatifs*limite); i <= limite; i++) {
+    if ((CiblesPossibles[i]>max_trios) && (Resultat[partie_actuelle][i][0]!=0)) { max_trios=CiblesPossibles[i]; newcible = i; }
+    }
+//    alertbox("AVERTISSEMENT :","<CENTER>Aucune cible ne peut plus être atteinte par "+document.FormConfig.min_cibles.value+" trios.<BR/>La limite pour ce plateau est à présent de "+max_trios+" trios.<BR/>La cible proposée correspond à ce maximum.</CENTER>",180,470);
+  }
+  return newcible;
+}
+
+function VoirNombreTrios() {
+    var limite = Math.min(borne_sup*borne_sup+Math.abs(borne_sup),Limite_cible());
+    var contenu_alert_debut = "<CENTER><div style='overflow:auto; width:400px; height:80;'><TABLE cellpadding=0 cellspacing=0  border=1><tbody><TR valign='middle' align='center'><TD height=30 width=150><DIV style='width:150px;'><CENTER><span style='font-size: 12pt'>CIBLES</span></CENTER></DIV></TD>";
+    var contenu_alert_fin = "</TR><TR valign='middle' align='center'><TD height=30 width=100><CENTER><span style='font-size: 12pt'>Nombres de TRIOS</span></CENTER></TD>";
+    ChercherCiblesPossibles();
+    for (var i = ((-1)*nombres_relatifs*limite); i <= limite; i++) {
+      contenu_alert_debut+="<TD height=30 width=30><DIV style='width:30px;'><CENTER><span style='font-size: 12pt'>"+i+"</span></CENTER></DIV></TD>";
+      contenu_alert_fin+="<TD height=30 width=30><CENTER><span style='font-size: 12pt'>"+CiblesPossibles[i]+"</span></CENTER></TD>";
+    }
+    contenu_alert_fin+="</TR></tbody></TABLE></div></CENTER>";
+    alertbox("INFORMATION :","<CENTER>Ci-dessous le nombre de trios (cible par cible) <u>sur le plateau 7x7</u> :</CENTER><br/>"+contenu_alert_debut+contenu_alert_fin,210,420);
+}
+
+function VoirTrio() { //  x_trio = 1;y_trio = 1;test_trio = 0;
+  if (nb_point<1) {
+      var pas_trouve = true;
+      if (x_trio>fin_plateau) { x_trio = 1; } // au cas où le dernier test aurait été fait sur un plateau plus grand
+      if (y_trio>fin_plateau) { y_trio = 1; }
+      var c = x_trio;
+      var  l = y_trio;
+      var x1 = 0; var y1 = 0;
+      var x2 = 0; var y2 = 0;
+      var nb_boucle = 0;
+      while ((pas_trouve) && (nb_boucle<=(fin_plateau*fin_plateau+1))){
+        nb_boucle++;
+        if (coordOK(c-1,l-1)) {
+          if ((coordOK(c-2,l-2)) && (1>test_trio)) { // test 1
+            test_trio = 1;
+            x1 = c-1; y1 = l-1;
+            x2 = c-2; y2 = l-2;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+          if (((coordOK(c+1,l+1)) && (2>test_trio)) && (pas_trouve)) {
+            test_trio = 2;
+            x1 = c-1; y1 = l-1;
+            x2 = c+1; y2 = l+1;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+        }
+        if (coordOK(c-1,l)) {
+          if (((coordOK(c-2,l)) && (3>test_trio)) && (pas_trouve)) {
+            test_trio = 3;
+            x1 = c-1; y1 = l;
+            x2 = c-2; y2 = l;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+          if (((coordOK(c+1,l)) && (4>test_trio)) && (pas_trouve)) {
+            test_trio = 4;
+            x1 = c-1; y1 = l;
+            x2 = c+1; y2 = l;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+        }
+        if (coordOK(c,l-1)) {
+          if (((coordOK(c,l-2)) && (5>test_trio)) && (pas_trouve)) {
+            test_trio = 5;
+            x1 = c; y1 = l-1;
+            x2 = c; y2 = l-2;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+          if (((coordOK(c,l+1)) && (6>test_trio)) && (pas_trouve)) {
+            test_trio = 6;
+            x1 = c; y1 = l-1;
+            x2 = c; y2 = l+1;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+        }
+        if (coordOK(c+1,l-1)) {
+          if (((coordOK(c+2,l-2)) && (7>test_trio)) && (pas_trouve)) {
+            test_trio = 7;
+            x1 = c+1; y1 = l-1;
+            x2 = c+2; y2 = l-2;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+          if (((coordOK(c-1,l+1)) && (8>test_trio)) && (pas_trouve)) {
+            test_trio = 8;
+            x1 = c+1; y1 = l-1;
+            x2 = c-1; y2 = l+1;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+          }
+        }
+        if (((coordOK(c+2,l)) && (coordOK(c+1,l))) && ((9>test_trio) && (pas_trouve))) {
+            test_trio = 9;
+            x1 = c+2; y1 = l;
+            x2 = c+1; y2 = l;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+        }
+        if (((coordOK(c+2,l+2)) && (coordOK(c+1,l+1))) && ((10>test_trio) && (pas_trouve))) {
+            test_trio = 10;
+            x1 = c+2; y1 = l+2;
+            x2 = c+1; y2 = l+1;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+        }
+        if (((coordOK(c,l+2)) && (coordOK(c,l+1))) && ((11>test_trio) && (pas_trouve))) {
+            test_trio = 11;
+            x1 = c; y1 = l+2;
+            x2 = c; y2 = l+1;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+        }
+        if (((coordOK(c-1,l+1)) && (coordOK(c-2,l+2))) && ((12>test_trio) && (pas_trouve))) {
+            test_trio = 12;
+            x1 = c-1; y1 = l+1;
+            x2 = c-2; y2 = l+2;
+            if ((nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]+Plateau[partie_actuelle][c][l]) || (nombre_cible[partie_actuelle] == Plateau[partie_actuelle][x1][y1]*Plateau[partie_actuelle][x2][y2]-Plateau[partie_actuelle][c][l])) { pas_trouve = false; }
+        }
+        if (pas_trouve) {
+          test_trio = 0;
+          c++;
+          if (c>fin_plateau) { c = 1; if (l==fin_plateau) { l = 1; } else { l++; } }
+        }
+      }
+      if (pas_trouve) {
+        alertbox("INFORMATION :","<CENTER>Aucun trio ne peut atteindre cette cible dans cette grille.</CENTER>",120,360);
+      }
+      else {
+        Effacer();
+        trio_montre = true;
+        x_trio = c;  y_trio = l;
+        for (var x = debut_plateau; x <= fin_plateau; x++) {
+          for (var y = debut_plateau; y <= fin_plateau; y++) {
+            if (((x==x_trio) && (y==y_trio)) || (((x==x1) && (y==y1)) || ((x==x2) && (y==y2)))) {
+              Grille[x][y] = false ;
+              window.document.images["vide"+x+y].src=chemin+"vide.gif";
+            }
+            else {
+              Grille[x][y] = true ;
+              window.document.images["vide"+x+y].src=chemin+"cache.gif";
+            
+            }
+        }}
+      }
+  }
+  else {
+    alertbox("AVERTISSEMENT :","<CENTER>Cette option n'est pas valable pour cette variante !</CENTER>",120,360);
+  }
+}
+
+function coordOK(x,y) {
+ if (((x<=fin_plateau) && (x>=1)) && ((y<=fin_plateau) && (y>=1))) { return true; }
+ else { return false; }
+}
+
+function ChercherCiblesPossibles() { // j'ai modifié ici pour qu'il ne compte que dans le tableau 7x7 pour être certain d'avoir les 4 trios même si un passage de 9x9 à 7x7 est fait en cours de manche
+  var max_trio = 0;
+  var lim_sup = borne_sup*borne_sup+Math.abs(borne_sup);
+  CiblesPossibles = new Array;
+  for (var n = -lim_sup; n <= lim_sup; n++) {
+  CiblesPossibles[n] = 0;
+  }
+// ci-dessous la fin des boucles qui était à fin_plateau est passée à 7 (voir remarque au début de la fonction)
+  for (var c = 1; c <= 7; c++) {
+    for (var l = 1; l <= 7; l++) {
+    if (coordOK(c-1,l-1)) {
+      if (coordOK(c-2,l-2)) {
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l-1]*Plateau[partie_actuelle][c-2][l-2]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l-1]*Plateau[partie_actuelle][c-2][l-2]-Plateau[partie_actuelle][c][l]]++;
+      }
+      if (coordOK(c+1,l+1)) {
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l-1]*Plateau[partie_actuelle][c+1][l+1]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l-1]*Plateau[partie_actuelle][c+1][l+1]-Plateau[partie_actuelle][c][l]]++;
+      }
+    }
+    if (coordOK(c-1,l)) {
+      if (coordOK(c-2,l)) {
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l]*Plateau[partie_actuelle][c-2][l]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l]*Plateau[partie_actuelle][c-2][l]-Plateau[partie_actuelle][c][l]]++;
+      }
+      if (coordOK(c+1,l)) {
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l]*Plateau[partie_actuelle][c+1][l]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c-1][l]*Plateau[partie_actuelle][c+1][l]-Plateau[partie_actuelle][c][l]]++;
+      }
+    }
+    if (coordOK(c,l-1)) {
+      if (coordOK(c,l-2)) {
+        CiblesPossibles[Plateau[partie_actuelle][c][l-1]*Plateau[partie_actuelle][c][l-2]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c][l-1]*Plateau[partie_actuelle][c][l-2]-Plateau[partie_actuelle][c][l]]++;
+      }
+      if (coordOK(c,l+1)) {
+        CiblesPossibles[Plateau[partie_actuelle][c][l-1]*Plateau[partie_actuelle][c][l+1]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c][l-1]*Plateau[partie_actuelle][c][l+1]-Plateau[partie_actuelle][c][l]]++;
+      }
+    }
+    if (coordOK(c+1,l-1)) {
+      if (coordOK(c+2,l-2)) {
+        CiblesPossibles[Plateau[partie_actuelle][c+1][l-1]*Plateau[partie_actuelle][c+2][l-2]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c+1][l-1]*Plateau[partie_actuelle][c+2][l-2]-Plateau[partie_actuelle][c][l]]++;
+      }
+      if (coordOK(c-1,l+1)) {
+        CiblesPossibles[Plateau[partie_actuelle][c+1][l-1]*Plateau[partie_actuelle][c-1][l+1]+Plateau[partie_actuelle][c][l]]++;
+        CiblesPossibles[Plateau[partie_actuelle][c+1][l-1]*Plateau[partie_actuelle][c-1][l+1]-Plateau[partie_actuelle][c][l]]++;
+      }
+    }
+    if ((coordOK(c+2,l)) && (coordOK(c+1,l))) {
+      CiblesPossibles[Plateau[partie_actuelle][c+2][l]*Plateau[partie_actuelle][c+1][l]+Plateau[partie_actuelle][c][l]]++;
+      CiblesPossibles[Plateau[partie_actuelle][c+2][l]*Plateau[partie_actuelle][c+1][l]-Plateau[partie_actuelle][c][l]]++; }
+    if ((coordOK(c+2,l+2)) && (coordOK(c+1,l+1))) {
+      CiblesPossibles[Plateau[partie_actuelle][c+2][l+2]*Plateau[partie_actuelle][c+1][l+1]+Plateau[partie_actuelle][c][l]]++;
+      CiblesPossibles[Plateau[partie_actuelle][c+2][l+2]*Plateau[partie_actuelle][c+1][l+1]-Plateau[partie_actuelle][c][l]]++; }
+    if ((coordOK(c,l+2)) && (coordOK(c,l+1))) {
+      CiblesPossibles[Plateau[partie_actuelle][c][l+2]*Plateau[partie_actuelle][c][l+1]+Plateau[partie_actuelle][c][l]]++;
+      CiblesPossibles[Plateau[partie_actuelle][c][l+2]*Plateau[partie_actuelle][c][l+1]-Plateau[partie_actuelle][c][l]]++; }
+    if ((coordOK(c-1,l+1)) && (coordOK(c-2,l+2))) {
+      CiblesPossibles[Plateau[partie_actuelle][c-1][l+1]*Plateau[partie_actuelle][c-2][l+2]+Plateau[partie_actuelle][c][l]]++;
+      CiblesPossibles[Plateau[partie_actuelle][c-1][l+1]*Plateau[partie_actuelle][c-2][l+2]-Plateau[partie_actuelle][c][l]]++; }
+    }
+  }
+//  var verification = 0;
+  for (var n = -lim_sup; n <= lim_sup; n++) {
+  CiblesPossibles[n] = CiblesPossibles[n] - Resultat[partie_actuelle][n][0];
+  if (max_trio<CiblesPossibles[n]) { max_trio = CiblesPossibles[n]; }
+//  verification = verification + CiblesPossibles[n]
+  }
+  if ((document.FormConfig.min_cibles.value>max_trio) && (cibles_possibles_uniquement)) {
+    alertbox("AVERTISSEMENT :","<CENTER>Aucune cible ne peut être atteinte par "+document.FormConfig.min_cibles.value+" trios.<BR/>La limite pour ce plateau est de "+max_trio+" trios.<BR/>Il est fortement recommandé de fixer cette option bien en dessous.</CENTER>",180,470);
+  document.FormConfig.min_cibles.value = max_trio;
+  }
+//  alert(verification+" "+max_trio);
+}
+
+function Basculer_cibles_possibles_uniquement() {
+  if (cibles_possibles_uniquement) {
+  cibles_possibles_uniquement = false;
+  }
+  else {
+    cibles_possibles_uniquement = true;
+  ChercherCiblesPossibles();
+  }
+}
+
+function EnleverLigne0Colonne0(Plateau_temp,Grille_temp) {
+  Grille_temp[0][0]=true;
+  Plateau_temp[0][0]="";
+  for (var k = 1; k <= 9; k++) {
+  Grille_temp[k][0]=true;
+  Grille_temp[0][k]=true;
+  Plateau_temp[k][0]=ligne0.charAt(k-1);
+  Plateau_temp[0][k]=colonne0.charAt(k-1);
+  }
+}
+
+function Effacer() {
+// on laisse le signe pour l'instant  Operation[0]="0";
+  if (etape>0) { image_cliquee_1.src=chemin+"vide.gif"; }
+  if (etape>1) { image_cliquee_2.src=chemin+"vide.gif"; }
+  if (etape>2) { image_cliquee_3.src=chemin+"vide.gif"; }
+  etape=0;
+  nombre3_coche_auto = false;
+  for (var c = debut_plateau; c <= fin_plateau; c++) {
+    for (var l = debut_plateau; l <= fin_plateau; l++) {
+      Grille[c][l]=false;
+    if ((cacher_case_active) || (trio_montre)) { window.document.images["vide"+c+l].src=chemin+"vide.gif"; }
+    }
+  }
+  if (trio_montre) { trio_montre=false; }
+  document.getElementById("nombre1").firstChild.nodeValue="?";
+  document.getElementById("nombre2").firstChild.nodeValue="?";
+  document.getElementById("nombre3").firstChild.nodeValue="?";
+}
+
+function Change_form_divJeux() {
+  if ((form_divJeux.affichage.checked)&&(contenu_div_jeux != "")) { document.getElementById("divJeux").style.height="290px"; }
+  else {
+    if ((form_divJeux.affichage.checked)&&(contenu_div_jeux == "")) { document.getElementById("divJeux").style.height="auto"; }
+    else { document.getElementById("divJeux").style.height="0px"; }
+  }
+}
+
+function AjouterDivJeux(numero,resultat) {
+  contenu_div_jeux += "<td width=230px><DIV style='width:230px;'><CENTER><span style='font-size: 20pt'><u>Trio n°"+numero+"</u></span></CENTER><TABLE cellpadding=0 cellspacing=0  border=0>";
+  var min_x = Math.min(Jeux[partie_actuelle][numero]["x_nombre1"],Math.min(Jeux[partie_actuelle][numero]["x_nombre2"],Jeux[partie_actuelle][numero]["x_nombre3"]));
+  var min_y = Math.min(Jeux[partie_actuelle][numero]["y_nombre1"],Math.min(Jeux[partie_actuelle][numero]["y_nombre2"],Jeux[partie_actuelle][numero]["y_nombre3"]));
+  if (Jeux[partie_actuelle][numero]["x_nombre1"] == Jeux[partie_actuelle][numero]["x_nombre2"]) { if (min_x>debut_plateau) { min_x--; if (min_x == 8) { min_x--; }}; }
+  else { if (Jeux[partie_actuelle][numero]["y_nombre1"] == Jeux[partie_actuelle][numero]["y_nombre2"]) { if (min_y>debut_plateau) { min_y--; if (min_y == 8) { min_y--; }}; } }
+    contenu_div_jeux+="<TR valign='middle' align='center'><TD height=50px width=50px background='"+chemin+"vide.gif'></TD>";
+    for (var c = min_x; c <= (min_x+2); c++) {
+    contenu_div_jeux+="<TD height=50px width=50px background='"+chemin+"vide.gif'><CENTER><span style='font-size: 16pt'><B>"+Plateau[partie_actuelle][c][0]+"</B></span></CENTER></TD>";
+    }
+    contenu_div_jeux+="</TR>";
+  for (var l = min_y; l <= (min_y+2); l++) {
+    contenu_div_jeux+="<TR valign='middle' align='center'><TD height=50px width=50px background='"+chemin+"vide.gif'><CENTER><span style='font-size: 16pt'><B>"+Plateau[partie_actuelle][0][l]+"</B></span></CENTER></TD>";
+    for (var c = min_x; c <= (min_x+2); c++) {
+      contenu_div_jeux+="<TD height=50px width=50px background='"+chemin;
+      if (((Jeux[partie_actuelle][numero]["x_nombre1"]==c)&&(Jeux[partie_actuelle][numero]["y_nombre1"]==l)) || ((Jeux[partie_actuelle][numero]["x_nombre2"]==c)&&(Jeux[partie_actuelle][numero]["y_nombre2"]==l))  || ((Jeux[partie_actuelle][numero]["x_nombre3"]==c)&&(Jeux[partie_actuelle][numero]["y_nombre3"]==l))) {
+        if ((Jeux[partie_actuelle][numero]["x_nombre3"]==c)&&(Jeux[partie_actuelle][numero]["y_nombre3"]==l)) { contenu_div_jeux+="fond50_rondv.gif"; } else { contenu_div_jeux+="fond50_rond.gif"; }
+      }
+      else {
+        contenu_div_jeux+="fond50.gif";
+      }
+      contenu_div_jeux+="'><CENTER><span style='font-size: 20pt'>"+Plateau[partie_actuelle][c][l]+"</span></CENTER></TD>";
+    }
+    contenu_div_jeux+="</TR>";
+  }
+  contenu_div_jeux+="</TABLE><BR/><CENTER><span style='font-size: 20pt'>"+resultat+" = ("+Plateau[partie_actuelle][Jeux[partie_actuelle][numero]["x_nombre1"]][Jeux[partie_actuelle][numero]["y_nombre1"]]+" x "+Plateau[partie_actuelle][Jeux[partie_actuelle][numero]["x_nombre2"]][Jeux[partie_actuelle][numero]["y_nombre2"]]+") "+Jeux[partie_actuelle][numero][0]+" "+Plateau[partie_actuelle][Jeux[partie_actuelle][numero]["x_nombre3"]][Jeux[partie_actuelle][numero]["y_nombre3"]]+"</span></CENTER></DIV></TD>";
+// avant la modif je faisais ça ici :  document.getElementById('divJeux').innerHTML = "<table border='0'><tbody><tr valign='middle'>"+contenu_div_jeux+"</TR></tbody></table>";
+  document.getElementById("divJeux").style.height="290px"; // pour éviter l'ascenseur vertical
+}
+
+function Verifier_automatiquement() {
+  var resultat_operation = Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]*Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]];
+  if (nombre_cible[partie_actuelle] == (resultat_operation + Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]])) { Operation[0]="+"; Verifier(); }
+  else {
+  if (nombre_cible[partie_actuelle] == (resultat_operation - Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]])) { Operation[0]="-"; Verifier(); }
+  else {
+  alertbox("AVERTISSEMENT :","<CENTER>Le résultat ne peut être égale au nombre cible !<BR/>La main passe à l'autre joueur.</CENTER>",140,300);
+  contenu_div_historique_debut+="- J"+joueur+" : "+Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]+" x "+Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]]+" ± "+Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]+" = ERREUR<br/>";
+    if (partie_commencee) { document.getElementById('div_historique').innerHTML = contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique; }
+  // ci-dessous je laisse volontaire le joueur sur le même numéro car changer_joueur va s'occuper de le changer dès sa prochaine exécution mais avec 411 et 9 à la place de 410 et 10 j'indique que l'historique a été complété
+  if (partie_commencee) {
+    if ( joueur == 2 ) { horizontal = 9; }
+    else { horizontal = 411; }
+  }
+  else { Effacer(); }
+  }
+  }
+}
+
+function Basculer_verification_automatiquement() {
+  if (verification_auto) {
+  verification_auto = false;
+  Operation[0]="0";
+  }
+  else {
+    verification_auto = true;
+  window.document.images["image_plusmoins"].src=chemin+"plusmoins.gif";
+  }
+}
+
+function Verifier() {
+  if ((Operation[0]=="0")||(etape!=3)) {
+if (etape!=3) {alertbox('AVERTISSEMENT :','<CENTER>Il faut sélectionner 3 nombres !</CENTER>',120,300);}
+else {alertbox("AVERTISSEMENT :","<CENTER>Il faut choisir entre + et -<BR/>en cliquant sur l'opération +/- !</CENTER>",140,300);}
+  }
+  else {
+    var resultat_operation = Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]*Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]];
+    if (Operation[0]=="+") { resultat_operation += Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]; }
+    else { resultat_operation -= Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]; }
+    if (resultat_operation!=nombre_cible[partie_actuelle]) {
+    alertbox("AVERTISSEMENT :","<CENTER>Le résultat de l'opération<BR/>n'est pas égale au nombre cible !<BR/>La main passe à l'autre joueur.</CENTER>",160,300);
+    contenu_div_historique_debut+="- J"+joueur+" : "+Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]+" x "+Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]]+" "+Operation[0]+" "+Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]+" = ERREUR<br/>";
+    if (partie_commencee) { document.getElementById('div_historique').innerHTML = contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique; }
+    // ci-dessous je laisse volontaire le joueur sur le même numéro car changer_joueur va s'occuper de le changer dès sa prochaine exécution mais avec 411 et 9 à la place de 410 et 10 j'indique que l'historique a été complété
+    if (partie_commencee) {
+      if ( joueur == 2 ) { horizontal = 9; }
+      else { horizontal = 411; }
+    }
+  }
+    else {
+      combinaison_deja_proposee=false;
+      var rang = 0;
+      while ((rang<Resultat[partie_actuelle][nombre_cible[partie_actuelle]][0])&&(combinaison_deja_proposee==false)) {
+        rang++;
+        if (((((((Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["x_nombre1"]==Operation["x_nombre1"])&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["x_nombre2"]==Operation["x_nombre2"]))&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["y_nombre1"]==Operation["y_nombre1"]))&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["y_nombre2"]==Operation["y_nombre2"]))) || (((((Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["x_nombre1"]==Operation["x_nombre2"])&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["x_nombre2"]==Operation["x_nombre1"]))&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["y_nombre1"]==Operation["y_nombre2"]))&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["y_nombre2"]==Operation["y_nombre1"])))) && ((Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["x_nombre3"]==Operation["x_nombre3"])&&(Jeux[partie_actuelle][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]]["y_nombre3"]==Operation["y_nombre3"]))) {
+          combinaison_deja_proposee=true;
+        }
+      }
+      if (combinaison_deja_proposee) {
+    alertbox("AVERTISSEMENT :","<CENTER>Ce trio a déjà été proposé lors du jeu n°"+Resultat[partie_actuelle][nombre_cible[partie_actuelle]][rang]+".<BR/>Il faut donc en trouver un nouveau.</CENTER>",140,350);
+    }
+      else {
+        Jeux[partie_actuelle][0]++;
+        Jeux[partie_actuelle][Jeux[partie_actuelle][0]] = new Array;
+        CopierTableauOperation(Operation,Jeux[partie_actuelle][Jeux[partie_actuelle][0]]);
+        Resultat[partie_actuelle][nombre_cible[partie_actuelle]][0]++;
+        Resultat[partie_actuelle][nombre_cible[partie_actuelle]][Resultat[partie_actuelle][nombre_cible[partie_actuelle]][0]] = Jeux[partie_actuelle][0];
+        if (form_divJeux.affichage.checked) {
+          AjouterDivJeux(Jeux[partie_actuelle][0],nombre_cible[partie_actuelle]);
+          document.getElementById('divJeux').innerHTML = "<table border='0'><tbody><tr valign='middle'>"+contenu_div_jeux+"</TR></tbody></table>";
+        }
+        if (cibles_possibles_uniquement) { CiblesPossibles[nombre_cible[partie_actuelle]]--; }
+        var points_gagnes;
+    if (nb_point>0.5) {
+      points_gagnes = Math.floor(nb_point);
+    }
+    else {
+      points_gagnes = 0.5;
+    }
+    if (!partie_commencee) { joueur = 1; }
+        score[joueur]+=points_gagnes;
+        document.getElementById("affichage_score"+joueur).firstChild.nodeValue=score[joueur];
+    contenu_div_historique_debut+="- J"+joueur+" : "+Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]+" x "+Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]]+" "+Operation[0]+" "+Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]+" = "+points_gagnes+" POINT";
+    if (points_gagnes>1) { contenu_div_historique_debut+="S"; }
+  contenu_div_historique="<br/>"+contenu_div_historique_debut+"<br/>"+contenu_div_historique;
+       if (partie_commencee) { document.getElementById('div_historique').innerHTML = contenu_div_historique; }
+    if ( joueur_debut_manche == 1 ) { joueur_debut_manche = 2; }
+    else { joueur_debut_manche = 1; }
+    // j'ai fait un premier essai avec affichage du score uniquement pour premier mais le passage automatique à la cible suivante étant un peu déroutant j'ai préféré remettre l'alert à chaque réussite (pour remettre il faut décommenter les deux lignes dans le if ci-dessous et remettre dans le texte un truc du genre "Cette information ne s'affichera plus à l'avenir..."
+        if (eviter_alert["verification_ok_classique"] == false) {
+      if (partie_commencee) {
+        //eviter_alert["verification_ok_classique"] = true ;
+    if (((FormChoix.ListeGagnant.selectedIndex == 0) && ((score[1]>=21) || (score[2]>=21))) || ((FormChoix.ListeGagnant.selectedIndex == 1) && (temps_ecoule>=15))) {
+      var joueur_gagnant = 1;
+      if (score[2]>score[1]) { joueur_gagnant = 2; }
+  alertbox("PARTIE TERMINÉE !","<CENTER><B>"+nom_joueur[joueur_gagnant].toUpperCase()+" A GAGNÉ.</B><BR/>L'historique de toute la partie est consultable ci-dessous :<BR/><div style='text-align: left;overflow:auto;width:190px; height:150px;padding-left: 10px; border-width:1px; border-style:dashed;'>"+contenu_div_historique+"</div>Information : bien que la partie soit normalement terminée,<BR/>après avoir cliqué sur OK vous pourrez continuer à y jouer<BR/>ou cliquer sur COMMENCER UNE NOUVELLE...</CENTER>",370,400);
+      contenu_div_historique="<br/><br/><CENTER><B>GAGNANT = "+nom_joueur[joueur_gagnant]+"</B></CENTER>"+contenu_div_historique;
+    }
+    else {
+      alertbox("BRAVO !","<CENTER>"+points_gagnes+" point(s) de plus pour "+nom_joueur[joueur]+".<BR/>L'historique de la manche est consultable ci-dessous :<BR/><div style='text-align: left;overflow:auto;width:190px; height:150px;padding-left: 10px; border-width:1px; border-style:dashed;'>"+contenu_div_historique_debut+"</div>Attention : dès que vous aurez cliqué sur le bouton OK,<BR/>la manche suivante commencera et c'est "+nom_joueur[joueur_debut_manche]+"<BR/>qui aura la main car il n'avait pas commencé celle-ci.</CENTER>",370,360);
+    }
+      }
+      else {
+        //eviter_alert["verification_ok_classique"] = true ;
+        alertbox("BRAVO !","<CENTER>"+points_gagnes+" point(s) de plus.<BR/>Tant que la partie à deux joueurs n'est pas commencée<BR/>seul "+nom_joueur[1]+" a son score augmenté.<BR/>Vous pouvez cependant continuer à vous entraîner.</CENTER>",190,340);
+      }
+    }
+    nombre_cible[partie_actuelle]=NouvelleCible();
+    contenu_div_historique_debut="<u>CIBLE = "+nombre_cible[partie_actuelle]+"</u><br/>";
+    if (partie_commencee) { document.getElementById('div_historique').innerHTML = contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique; }
+    if (nombre_cible[partie_actuelle]>50) { nb_point = 5; } // 0.5 de plus car un changement de joueur va être opéré juste après
+    else { nb_point = 4; }
+    contenu_points = "(+ "+Math.floor((nb_point-0.5))+" points)";
+    // ci-dessous je place volontaire joueur sur le numéro contraire car changer_joueur va s'occuper de le changer dès sa prochaine exécution
+    if ( joueur_debut_manche == 1 ) { joueur = 2; horizontal = 9; }
+    else { joueur = 1; horizontal = 411; }
+      }
+    }
+    Effacer();
+  }
+}
+
+// pour gerer les calques Grille et Tab
+function InitCalque(Nom,Gauche,Haut,Largeur,Hauteur) {
+  // pour NS4 et NS5
+  if (document.layers) {
+  document.write("<LAYER name='"+Nom+"' top="+Haut+" left="+Gauche+" height="+Hauteur+" width="+Largeur+"></LAYER>");
+  }
+  //else if 2 fois ??? à essayer
+  // pour IE4
+  if (document.all) {
+    document.write("<DIV id='"+Nom+"' style='position:absolute;top:"+Haut+";left:"+Gauche+";height:"+Hauteur+";width:"+Largeur+";'></DIV>");
+  }
+  // pour NS6
+  else if (document.getElementById) {
+    document.write("<DIV id='"+Nom+"' style='position:absolute;top:"+Haut+";left:"+Gauche+";height:"+Hauteur+";width:"+Largeur+";'></DIV>");
+  }
+}
+
+function InitCalques(Gauche,Haut,Largeur,Hauteur) {
+  InitCalque("CalqueTableau",Gauche,Haut,Largeur,Hauteur);
+  InitCalque("CalqueGrille",Gauche,Haut,Largeur,Hauteur);
+}
+
+function Change_Nombre_Cible(nb) {
+  nombre_cible[partie_actuelle]=nb;
+  document.getElementById('affichage_resultat').firstChild.nodeValue=nb;
+}
+
+function RecommencerLesParties(relatifs_ou_pas) {
+  if (relatifs_ou_pas == 0) { nombres_relatifs = 0; }
+  if (relatifs_ou_pas == 1) { nombres_relatifs = 1; } // pas de "else" car je me laisse la posibilité d'utiliser cette fonction sans toucher à la variable nombres_relatifs
+  score[joueur]=0;
+  Jeux["Classique"] = new Array;
+  Jeux["Classique"][0] = 0;
+}
+
+function ChargeTableau() {
+  var contenu="<center><table border='0'><tbody><TR valign='middle' align='center'><td width=120><div style='width:200px;height:400px;'></div></td><td width=500 align='center'><DIV id='div_tableau'><TABLE cellpadding=0 cellspacing=0 border=0>";
+
+// <TR valign='middle' align='center'><td colspan='3'><div style='height:60px;'></div></TD></TR>
+
+  for (var l = 1; l <= fin_plateau; l++) {
+    contenu+="<TR valign='middle' align='center'>";
+    for (var c = 1; c <= fin_plateau; c++) {
+    if (((l == 0)||(c == 0))&&(debut_plateau ==1)) {
+      contenu+="<TD height="+t_case+" width="+t_case+" background='"+chemin+"vide.gif'><CENTER><B><span style='font-size: 20pt'>"+Plateau[partie_actuelle][c][l]+"</span></B></CENTER></TD>";
+    }
+    else {
+      contenu+="<TD height="+t_case+" width="+t_case+" background='"+chemin;
+    if (fin_plateau == 9) {
+    contenu+="fond50.png'><CENTER><span style='font-size: 20pt'>"+Plateau[partie_actuelle][c][l]+"</span></CENTER></TD>";
+    }
+    else {
+    contenu+=Math.floor((5)*Math.random()+1)+".gif'><CENTER><span style='font-size: 22pt'>"+Plateau[partie_actuelle][c][l]+"</span></CENTER></TD>";
+    }
+    }
+    }
+    contenu+="</TR>";
+  }
+//*********************************************************************************************************************************************
+  contenu+="</TABLE></div><div style='width:500px;height:100px;'></div></td><td width=200 align='center'><div style='overflow:auto;width:200px;height:120px;'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD id='td_score2' height=80 width=100 align='center' background='"+chemin+"fond100_noir.gif'><span id='affichage_score2' style='font-size: 24pt'>0</span></TD></TR><TR valign='middle' align='center'><TD height=40><FORM name='Formnomjoueur2'><INPUT type='text' name='nomjoueur2' size=10 value='  JOUEUR 2' onchange='change_nom_joueur(2);'></FORM></TD></TR></tbody></table></div><div id='div_droite' style='overflow:auto;width:198px;height:400px;border-width:1px;border-style:dashed;'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD height=10></TD></TR><TR valign='middle' align='center'><TD height=80 width=80 background='"+chemin+"fond80.gif'><span style='font-size: 24pt'>?</span></TD></tr><TR valign='middle' align='center'><TD><img src='"+chemin+"fois.gif' border=0 width=80 height=42'></TD></tr><TR valign='middle' align='center'><TD height=80 width=80 background='"+chemin+"fond80.gif'><span style='font-size: 24pt'>?</span></TD></tr><TR valign='middle' align='center'><TD><img src='"+chemin+"plusmoins.gif' border=0 width=80 height=50></TD></tr><TR valign='middle' align='center'><TD height=80 width=80 background='"+chemin+"fond80_vert.gif'><span style='font-size: 24pt'>?</span></TD></tr></tbody></table><br/><INPUT type='button' value='METTRE EN PAUSE' onclick='mettre_en_pause();'></div></TD></tr></tbody></table></center>";
+  // pour NS4 et NS5
+  if (document.layers) {
+    document.layers["CalqueTableau"].document.write(contenu);
+    document.layers["CalqueTableau"].document.close();
+  }
+  // pour IE4
+  if (document.all) {
+    document.all["CalqueTableau"].innerHTML=contenu;
+  }
+  // pour NS6
+  else if (document.getElementById) {
+    document.getElementById("CalqueTableau").innerHTML=contenu;
+  }
+}
+
+function ChangeTableau() {
+  var contenu2="<TABLE cellpadding=0 cellspacing=0 border=0>";
+  for (var l = 1; l <= fin_plateau; l++) {
+    contenu2+="<TR valign='middle' align='center'>";
+    for (var c = 1; c <= fin_plateau; c++) {
+    if (((l == 0)||(c == 0))&&(debut_plateau ==1)) {
+      contenu2+="<TD height="+t_case+" width="+t_case+" background='"+chemin+"vide.gif'><CENTER><B><span style='font-size: 20pt'>"+Plateau[partie_actuelle][c][l]+"</span></B></CENTER></TD>";
+    }
+    else {
+      contenu2+="<TD height="+t_case+" width="+t_case+" background='"+chemin;
+    if (fin_plateau == 9) {
+    contenu2+="fond50.png'><CENTER><span style='font-size: 20pt'>"+Plateau[partie_actuelle][c][l]+"</span></CENTER></TD>";
+    }
+    else {
+    contenu2+=Math.floor((5)*Math.random()+1)+".gif'><CENTER><span style='font-size: 22pt'>"+Plateau[partie_actuelle][c][l]+"</span></CENTER></TD>";
+    }
+    }
+    }
+    contenu2+="</TR>";
+  }
+  contenu2+="</TABLE>";
+  document.getElementById("div_tableau").innerHTML=contenu2;
+}
+
+function changer_joueur() {
+  if (partie_commencee) {
+    Effacer();
+    if ((horizontal != 9) && (horizontal != 411)) { // dans ce cas c'est un changement de joueur provoqué par l'arrivée de la cible en limite
+      contenu_div_historique_debut+="- J"+joueur+" : pas de proposition<br/>";
+      document.getElementById('div_historique').innerHTML = contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique;
+    } // sinon l'historique a déjà été complété avant le changement de joueur
+  }
+  if (horizontal == 9) { horizontal = 10 ; }
+  if (horizontal == 411) { horizontal = 410 ; }
+  nb_point=nb_point-0.5;
+  if (nb_point>0.5) {
+    contenu_points = "(+ "+Math.floor(nb_point);
+    if (nb_point>1.5) { contenu_points+=" points)"; }
+    else { contenu_points+=" point)"; }
+    document.getElementById("affichage_points").firstChild.nodeValue=contenu_points;
+  }
+  else {
+    if (nb_point==0.5) { contenu_points = "(+ 0,5 point)"; document.getElementById("affichage_points").firstChild.nodeValue="(+ 0,5 point)"; }
+    VoirTrio();
+  }
+  if (joueur == 1) {
+    joueur = 2;
+    if( partie_commencee) {
+      document.getElementById('div_gauche').innerHTML = "<FIELDSET class='fieldsetm'><LEGEND>Historique de la partie :</LEGEND><div id='div_historique' style='text-align: left;overflow:auto;width:167px; height:293px; '>"+contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique+"</div></FIELDSET><br/><INPUT type='button' value='METTRE EN PAUSE' onclick='mettre_en_pause();'>";;
+      document.getElementById('div_droite').innerHTML = contenu_div_operation;
+    }
+  }
+  else {
+    joueur = 1;
+    if( partie_commencee) {
+      document.getElementById('div_droite').innerHTML = "<FIELDSET class='fieldsetm'><LEGEND>Historique de la partie :</LEGEND><div id='div_historique' style='text-align: left;overflow:auto;width:167px; height:293px; '>"+contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique+"</div></FIELDSET><br/><INPUT type='button' value='METTRE EN PAUSE' onclick='mettre_en_pause();'>";;
+      document.getElementById('div_gauche').innerHTML = contenu_div_operation;
+    }
+  }
+}
+
+function ChargeGrille() { //ICI il y a le joueur de gauche mais pas celui de droite qui lui est dans ChargeTableau() ***********************************************************************************
+// j'ai fait le choix d'intégrer le choix du plateau dans le select et les boutons suivants ont donc disparus :   Plateau : <INPUT type='radio' name='radio_taille' value='9x9' onclick='ChangeTaille(9);' checked>9 x 9 <INPUT type='radio' name='radio_taille' value='7x7' onclick='ChangeTaille(7);'>7 x 7 coloré
+  var contenu="<table border='0'><tbody><TR align='center'><td width=200 align='center' ><div style='overflow:auto;width:200px;height:120px;'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD id='td_score' height=80 width=100 align='center' background='"+chemin+"fond100_noir.gif'><span id='affichage_score1' style='font-size: 24pt'>0</span></TD></TR><TR valign='middle' align='center'><TD height=40><FORM name='Formnomjoueur1'><INPUT type='text' name='nomjoueur1' size=10 value='  JOUEUR 1' onchange='change_nom_joueur(1);'></FORM></TD></TR></tbody></table></div><div id='div_gauche' style='overflow:auto;width:198px;height:400px;border-width:1px;border-style:dashed;'>"+contenu_div_operation+"</div></td><td width=500 id='td_grille' align='center'><DIV id='div_grille'>";
+// <TR valign='middle' align='center'><td colspan='2'></TD></TR>
+  for (var l = 1; l <= fin_plateau; l++) {
+    for (var c = 1; c <= fin_plateau; c++) {
+    contenu+="<img src='"+chemin+"vide.gif' border=0 height="+t_case+" width="+t_case+" onMouseOut='mOut(this,"+c+","+l+");' onMouseOver='mOver(this,"+c+","+l+");' onClick='mClick(this,"+c+","+l+");' name='vide"+c+l+"'>";
+    }
+    contenu+="<BR/>";
+  }
+  contenu+="</DIV><div style='width:500px;height:100px;text-align:left;'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD id='TD_CIBLE' height=10 width=210></TD><TD width=80></TD></TR><TR valign='middle' align='center'><TD></TD><TD height=80 background='"+chemin+"fond80_rouge.gif'><span id='affichage_resultat' style='font-size: 24pt'>"+nombre_cible[partie_actuelle]+"</span><BR/><span id='affichage_points' style='font-size: 10pt'>(+ 3 points)</span></TD></tr></tbody></table><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD width=10></TD><TD id='TD_BARRE' height=10 width=0 background='"+chemin+"cache.gif'></TD></TR></tbody></table></div></td></tr></tbody></table>";
+  // pour NS4 et NS5
+  if (document.layers) {
+    document.layers["CalqueGrille"].document.write(contenu);
+    document.layers["CalqueGrille"].document.close();
+  }
+  // pour IE4
+  if (document.all) {
+    document.all["CalqueGrille"].innerHTML=contenu;
+  }
+  // pour NS6
+  else if (document.getElementById) {
+    document.getElementById("CalqueGrille").innerHTML=contenu;
+  }
+}
+
+function ChangeGrille() {
+  var contenu2="";
+  for (var l = 1; l <= fin_plateau; l++) {
+    for (var c = 1; c <= fin_plateau; c++) {
+    contenu2+="<img src='"+chemin+"vide.gif' border=0 height="+t_case+" width="+t_case+" onMouseOut='mOut(this,"+c+","+l+");' onMouseOver='mOver(this,"+c+","+l+");' onClick='mClick(this,"+c+","+l+");' name='vide"+c+l+"'>";
+    }
+    contenu2+="<BR/>";
+  }
+  document.getElementById("div_grille").innerHTML=contenu2;
+}
+  
+function ChangeNombres() {
+  if (FormChoix.ListeNombres.selectedIndex == 0) { nombres_relatifs = 0; }
+  else { nombres_relatifs = 1; }
+  Recommencer();
+}
+
+function ChangeTaille(nouvelle_taille) {
+  if (nouvelle_taille == 7) {
+    t_case = 60;
+  }
+  else {
+    t_case = 50;
+  }
+  fin_plateau = nouvelle_taille;
+  ChangeGrille();
+  ChangeTableau();
+  Effacer();
+//     if (((cibles_possibles_uniquement) && (partie_actuelle != "UnPourToutes")) && (partie_actuelle != "Concours")) { ChercherCiblesPossibles(); }
+}
+
+function ChangePlateau() {
+  if (FormChoix.ListePlateaux.selectedIndex == 1) {
+    ChangeTaille(9);
+  }
+  else {
+  ChangeTaille(7);
+  }
+}
+
+function ChangeLimiteCibles() {
+  if (FormChoix.ListeLimitesCibles.selectedIndex == 0) {
+    limite_default = true;
+  }
+  else {
+  limite_default = false;
+  }
+}
+
+function ChangeVitesse() {
+  if (!pauseBool) { clearInterval(timer); }
+  if (FormChoix.ListeVitesse.selectedIndex == 0) {
+    vitesse = 40;
+  }
+  else { if (FormChoix.ListeVitesse.selectedIndex == 1) {
+    vitesse = 20;
+  }
+  else {
+    vitesse = 10;
+  }}
+  if (!pauseBool) { timer=setInterval("bouger_cible()", vitesse); }
+}
+
+function Recommencer() {
+    Resultat[partie_actuelle] = new Array;
+    Plateau[partie_actuelle] = new Array;
+    for (var c = 0; c <= 9; c++) {
+      Plateau[partie_actuelle][c] = new Array;
+      for (var l = 0; l <= 9; l++) {
+        Plateau[partie_actuelle][c][l]=Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*(parseFloat(borne_inf)+Math.floor(((parseFloat(borne_sup)-parseFloat(borne_inf))+1)*Math.random()));
+        Resultat[partie_actuelle][l*10+c] = new Array;
+        Resultat[partie_actuelle][l*10+c][0] = 0;
+        Resultat[partie_actuelle][(-1)*(l*10+c)] = new Array;
+        Resultat[partie_actuelle][(-1)*(l*10+c)][0] = 0;
+      }
+    }
+  if (debut_plateau == 1) { EnleverLigne0Colonne0(Plateau[partie_actuelle],Grille); }
+// à remettre si un jour j'ajoute la possibilité d'utiliser la répartition :  if (document.FormConfig.radio_nombres[2].checked) { Repartition(Plateau[partie_actuelle]); }
+  contenu_div_jeux = "";
+  document.getElementById('divJeux').innerHTML = "";
+  Jeux[partie_actuelle][0] = 0;
+  Change_form_divJeux();
+  Effacer(); // pour enlever les ronds et remettre grille à false partout
+  ChangeTableau(); // pour charger le nouveau plateau sans toucher aux bandeaux de droite et de gauche ni à la grille qui n'a pas changé
+  score[1]=0;score[2]=0;
+  document.getElementById("affichage_score1").firstChild.nodeValue=0;document.getElementById("affichage_score2").firstChild.nodeValue=0;
+    if (cibles_possibles_uniquement) { ChercherCiblesPossibles(); }
+  nombre_cible[partie_actuelle]=NouvelleCible();
+  document.getElementById("affichage_resultat").firstChild.nodeValue=nombre_cible[partie_actuelle];
+  contenu_div_historique_debut="<u>CIBLE = "+nombre_cible[partie_actuelle]+"</u><br/>";
+  contenu_div_historique="";
+  if (nombre_cible[partie_actuelle]>50) { nb_point = 5; } // 0.5 de plus car un changement de joueur va être opéré juste après
+  else { nb_point = 4; }
+  contenu_points = "(+ "+Math.floor((nb_point-0.5))+" points)";
+  document.getElementById("affichage_points").firstChild.nodeValue=contenu_points;
+  if (partie_commencee) {
+    joueur_debut_manche = Math.floor(2*Math.random())+1 ;
+    alertbox("ATTENTION !","<CENTER>"+nom_joueur[joueur_debut_manche]+" a gagné le tirage au sort.<BR/>Dès que vous aurez cliqué sur le bouton OK,<BR/>la première manche commencera et<BR/>c'est lui qui aura la main.</CENTER>",190,320);
+    if ( joueur_debut_manche == 1 ) { joueur = 2; horizontal = 9; }
+    else { joueur = 1; horizontal = 411; }
+    temps_ecoule=0;
+    clearInterval(chrono);
+    chrono=setInterval("ajouter_5_min()",300000);
+  }
+}
+
+function alert_reseau_college() {
+  alertbox("INFORMATION :","<CENTER>Les identifiants réseau sont ceux utilisés<BR/> pour Scribe/Connexion++/Eole/LaboMeP.<BR/>C'est à dire : ppp.nnn ou ppp.nnnn<BR/>+ mot de passe distribué en début d'année.</CENTER>",190,320);
+}
+
+function alert_repartition() {
+  alertbox("INFORMATION :","<CENTER>Dans le jeu d'origine, il y'a 49 cartons répartis de la manière suivante :<BR/>5 x 1 ; 6 x 2 ; 6 x 3 ; 6 x 4 ; 6 x 5 ; 6 x 6 ; 5 x 7 ; 5 x 8 et 4 x 9.</CENTER>",150,450);
+}
+
+function mOver(image,i,j) {
+  if ((Grille[i][j]) || (pauseBool)) {}
+  else {image.src=chemin+"cadrea.gif";}
+}
+
+function mOut(image,i,j) {
+  if ((Grille[i][j]) || (pauseBool)) { }
+  else { image.src=chemin+"vide.gif"; }
+}
+
+function Grille2(x,y) { // pour gérer éventuellement le changement d'image (fonctionnalité ajoutée en 07/2014)
+  Grille[x][y]=true;
+  if (cacher_case_active) { window.document.images["vide"+x+y].src=chemin+"cache.gif"; }
+}
+
+function GrilleOK(x,y) {
+  Grille[x][y]=false;
+  if (cacher_case_active) { window.document.images["vide"+x+y].src=chemin+"vide.gif"; }
+}
+
+function CauchageAuto(x,y) { // utilisée également pour avoir une grille propre quand on a coché le 3ème nombre et qu'il reste une possibilité d'où code 0,0
+  if (etape == 2) {
+  if (cochage_auto) {
+    Grille[x][y] == true ; // pas nécessaire en réalité car déjà fait dans la boucle "du carré"
+    window.document.images["vide"+x+y].src=chemin+"rondv"+t_case+".gif";
+    image_cliquee_3 = window.document.images["vide"+x+y]; // pour Effacer();
+    Operation["x_nombre3"]=x;
+    Operation["y_nombre3"]=y;
+    document.getElementById("nombre3").firstChild.nodeValue=Plateau[partie_actuelle][x][y];
+    nombre3_coche_auto = true;
+  }
+  else {
+    GrilleOK(x,y);
+  }
+  }
+  if ((etape == 3) || (cochage_auto)) {   // faire le tour du tableau et griser la dernière case en FALSE qui reste
+  for (var c = debut_plateau; c <= fin_plateau; c++) {
+    for (var l = debut_plateau; l <= fin_plateau; l++) {
+    if (Grille[c][l] == false) { Grille[c][l] = true ; if (cacher_case_active) { window.document.images["vide"+c+l].src=chemin+"cache.gif"; } }
+  }}
+  }
+}
+
+function mClick(image,i,j) {
+ if (pauseBool) {
+  mettre_en_pause();
+ }
+ else {
+  if ((Grille[i][j])||(etape==3)) {
+    if (etape==3) {
+      if (nombre3_coche_auto) {
+        if (effacage_auto) { Effacer(); } else { alertbox('AVERTISSEMENT :','<CENTER>Il ne faut que trois nombres !<BR/><i>Le 3ème a été coché automatiquement.</i></CENTER>',150,300); }
+      }
+      else {
+        if (effacage_auto) { Effacer(); }
+        else {
+          // avant  alertbox('AVERTISSEMENT :','<CENTER>Il ne faut que trois nombres !</CENTER>',120,300);
+          if (eviter_alert["erreur"] == false) {
+            confirmbox( "AVERTISSEMENT :" , "<CENTER>Il ne faut que trois nombres !</CENTER><BR/><CENTER>Cliquer sur OK pour continuer à être informé en cas d'erreur<BR/><I>ou sur ANNULER pour effacer automatiquement à la prochaine erreur.</I></CENTER>" , 200 , 450 , "erreur");
+          }    
+        }
+      }
+    }
+    else {
+      if ((debut_plateau == 1)&&((i == 0)||(j == 0))) {
+        //alertbox("ATTENTION :","<CENTER>Ce n'est pas un nombre du plateau de jeu !</CENTER>",120,300);
+      }
+      else {
+        if (effacage_auto) { Effacer(); }
+        else {
+          //avant    alertbox('ATTENTION :','- les trois nombres doivent être voisins<BR/>- ils doivent être alignés.<BR/>',140,300);
+          if (eviter_alert["erreur"] == false) {
+            confirmbox( "ATTENTION :" , "- les trois nombres doivent être voisins<BR/>- ils doivent être alignés.<BR/><BR/><CENTER>Cliquer sur OK pour continuer à être informé en cas d'erreur<BR/><I>ou sur ANNULER pour effacer automatiquement à la prochaine erreur.</I></CENTER>" , 220 , 450 , "erreur");
+          }
+        }
+      }
+    }
+  }
+  else {
+    etape++;
+    Grille[i][j]=true;
+    if (etape==1) {
+      image_cliquee_1 = image;
+      image.src=chemin+"rond"+t_case+".gif";
+      for (var c = debut_plateau; c <= fin_plateau; c++) {
+        for (var l = debut_plateau; l <= fin_plateau; l++) {
+          if ((c<(i-2))||(c>(i+2))||(l<(j-2))||(l>(j+2))) { Grille2(c,l); }
+      }}
+      if ((i-2)>=debut_plateau) {
+        if ((j-1)>=debut_plateau) { Grille2(i-2,j-1); }
+        if ((j+1)<=fin_plateau) { Grille2(i-2,j+1); }
+      }
+      if ((i-1)>=debut_plateau) {
+        if ((j-2)>=debut_plateau) { Grille2(i-1,j-2); }
+        if ((j+2)<=fin_plateau) { Grille2(i-1,j+2); }
+      }
+      if ((i+1)<=fin_plateau) {
+        if ((j-2)>=debut_plateau) { Grille2(i+1,j-2); }
+        if ((j+2)<=fin_plateau) { Grille2(i+1,j+2); }
+      }
+      if ((i+2)<=fin_plateau) {
+        if ((j-1)>=debut_plateau) { Grille2(i+2,j-1); }
+        if ((j+1)<=fin_plateau) { Grille2(i+2,j+1); }
+      }
+      // ci-dessous la gestion des "coins" qui avait été oubliée. exemple : si B1 cliqué alors impossible de réaliser un trio avec A2
+      if (((i-1)==debut_plateau) && (j==debut_plateau)) { Grille2(i-1,j+1); }
+      if (((j-1)==debut_plateau) && (i==debut_plateau)) { Grille2(i+1,j-1); }
+      if (((i+1)==fin_plateau) && (j==debut_plateau)) { Grille2(i+1,j+1); }
+      if (((j-1)==debut_plateau) && (i==fin_plateau)) { Grille2(i-1,j-1); }
+      if (((j+1)==fin_plateau) && (i==debut_plateau)) { Grille2(i+1,j+1); }
+      if (((i-1)==debut_plateau) && (j==fin_plateau)) { Grille2(i-1,j-1); }
+      if (((i+1)==fin_plateau) && (j==fin_plateau)) { Grille2(i+1,j-1); }
+      if (((j+1)==fin_plateau) && (i==fin_plateau)) { Grille2(i-1,j+1); }
+    }
+    else { if (etape==2) {
+      image_cliquee_2 = image;
+      image.src=chemin+"rond"+t_case+".gif";
+      max_i = Math.min(fin_plateau,Operation["x_nombre1"]+2);
+      min_i = Math.max(debut_plateau,Operation["x_nombre1"]-2);
+      max_j = Math.min(fin_plateau,Operation["y_nombre1"]+2);
+      min_j = Math.max(debut_plateau,Operation["y_nombre1"]-2);
+      for (var c = min_i; c <= max_i; c++) {for (var l = min_j; l <= max_j; l++) { if (Grille[c][l] == false) { Grille2(c,l); }}} // seules les cases du carré entourant le premier nombre sont encore cliquables on se contente donc de cocher toutes celles-ci (pour les rendres noncliquables) et on les cache sauf celles déjà cochée (dont le premiers et le deuxième nombre)
+        max_i = Math.max(i,Operation["x_nombre1"]);
+        min_i = Math.min(i,Operation["x_nombre1"]);
+        max_j = Math.max(j,Operation["y_nombre1"]);
+        min_j = Math.min(j,Operation["y_nombre1"]);
+        if (max_j==min_j) { // les cases sont sur la même ligne
+      if ((min_i+1)==max_i) { // les cases sont côte à côte
+      if ((min_i-1)<debut_plateau) { CauchageAuto(max_i+1,j); }
+      else { if ((max_i+1)>fin_plateau) { CauchageAuto(min_i-1,j); }
+      else { GrilleOK(min_i-1,j); GrilleOK(max_i+1,j); } //cases collées mais pas au bord
+      }
+        }
+    else {
+            CauchageAuto(min_i+1,j);
+      }
+    }
+    else {
+    if (max_i==min_i) {
+      if ((min_j+1)==max_j) {
+        if ((min_j-1)<debut_plateau) { CauchageAuto(i,max_j+1); }
+        else { if ((max_j+1)>fin_plateau) { CauchageAuto(i,min_j-1); }
+        else { GrilleOK(i,min_j-1); GrilleOK(i,max_j+1); } //cases collées mais pas au bord
+        }
+      }
+      else {
+            CauchageAuto(i,min_j+1);
+      }
+    }
+    else {
+      if (((i-Operation["x_nombre1"])*(j-Operation["y_nombre1"]))>0) { //l'une des cases se trouve en haut à gauche de l'autre
+        if ((min_i+1)==max_i) {
+          if (((min_i-1)<debut_plateau)||((min_j-1)<debut_plateau)) { CauchageAuto(max_i+1,max_j+1); }
+          else { if (((max_i+1)>fin_plateau)||((max_j+1)>fin_plateau)) { CauchageAuto(min_i-1,min_j-1); }
+          else { GrilleOK(max_i+1,max_j+1); GrilleOK(min_i-1,min_j-1); } //cases collées mais pas au bord
+          }
+        }
+        else {
+          CauchageAuto(min_i+1,min_j+1);
+        }
+      }
+      else {
+        if ((min_i+1)==max_i) {
+          if (((min_i-1)<debut_plateau)||((max_j+1)>fin_plateau)) { CauchageAuto(max_i+1,min_j-1); }
+          else { if (((max_i+1)>fin_plateau)||((min_j-1)<debut_plateau)) { CauchageAuto(min_i-1,max_j+1); }
+          else { GrilleOK(max_i+1,min_j-1); GrilleOK(min_i-1,max_j+1); } //cases collées mais pas au bord
+          }
+        }
+        else {
+          CauchageAuto(min_i+1,max_j-1);
+        }
+      }
+    }
+    }
+  }
+  else { image_cliquee_3 = image;   image.src=chemin+"rondv"+t_case+".gif"; if (cacher_case_active) { CauchageAuto(0,0); } }} // CauchageAuto(0,0) est là simplement pour cacher une éventuelle dernière case, les paramètres ne seront pas lus d'où le 0,0
+// Operation["x_nombre1"] et ["y_nombre1"] contiennent x et y du 1er facteur ... ["y_nombre3"] ... [0] contient "+" ou "-"
+  Operation["x_nombre"+etape]=i;
+  Operation["y_nombre"+etape]=j;
+  document.getElementById("nombre"+etape).firstChild.nodeValue=Plateau[partie_actuelle][i][j];
+  if (nombre3_coche_auto) { etape++; }
+  if ((verification_auto) && (etape == 3)) { Verifier_automatiquement(); }
+  } // fin du else qui se trouve après les erreurs
+}
+}
+
+function plusmoinsClick(image) {
+  if (verification_auto) {
+  alertbox('INFORMATION :','<CENTER>Le mode "vérification automatique" est activée.<BR/>Il est donc inutile de choisir entre + et -.</CENTER>',140,300);
+  }
+  else {
+  if ((Operation[0]=="0")||(Operation[0]=="-")) {
+    image.src=chemin+"plus.gif";
+    Operation[0]="+";}
+  else {
+    image.src=chemin+"moins.gif";
+    Operation[0]="-";
+  }
+  }
+}
+
+
+  Initialisation();
+  InitCalques(1,1,910,570);
+  ChargeTableau();
+  ChargeGrille();
+  chrono=setInterval("ajouter_5_min()",300000);
+  timer=setInterval("bouger_cible()", vitesse);
+
+  
+//document.getElementById('div_droite').innerHTML = "<FIELDSET class='fieldsetm'><LEGEND>Historique de la partie :</LEGEND><div id='div_historique' style='text-align: left;overflow:auto;width:167px; height:293px; '>"+contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique+"</div></FIELDSET><br/><INPUT type='button' value='METTRE EN PAUSE' onclick='mettre_en_pause();'>";;
+
+
+//-->
+</script>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+		</body>
+	</html>
