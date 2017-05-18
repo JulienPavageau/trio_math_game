@@ -7,8 +7,8 @@
 	$lemail=preg_replace('/[^a-zA-Z0-9.]+/', '', $_POST["mail"]);
 	$letab=preg_replace('/[^a-zA-Z0-9.]+/', '', $_POST["etab"]);
 	
-if ((!empty($json)&&(!empty($lelogin)&&(!empty($lepass)&&(!empty($lavariante)&&(!empty($lemail)&&(!empty($letab)){
-
+if ((!empty($json))&&(!empty($lelogin))&&(!empty($lepass))&&(!empty($lavariante))&&(!empty($lemail))&&(!empty($letab)))
+{
 	setlocale(LC_TIME, 'fr','fr_FR','fr_FR@euro','fr_FR.utf8','fr-FR','fra');
 	date_default_timezone_set('Europe/Paris');
 
