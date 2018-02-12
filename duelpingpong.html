@@ -56,11 +56,11 @@
 		<center><div id="divJeux" style="overflow:auto;width:850px; height:auto; ">&nbsp;</div></center><center><form name="form_divJeux"><input checked="checked" name="affichage" onchange="Change_form_divJeux();" type="checkbox" /><i>décocher cette case pour désactiver cet affichage qui pourrait ralentir le jeu quand la partie devient longue</i></form></center>
 	</div>
 	<div class="tab" id="tab4">
-	  <p align="justify" class="infotip-jck">
+	  <p align="justify">
 		<u>Comment jouer au TRIO ?</u><br />
 		- le joueur qui a la main sélectionne les deux premiers nombres qui doivent être multipliés puis le troisième nombre qui sera additionné ou soustrait au résultat de cette multiplication.<br />
 		- il change, si nécessaire, le signe de la deuxième opération en cliquant sur le signe "+" ou "-" ("+/-" en début de partie).<br />
-		- puis il clique sur le bouton "VERIFIER" ; si <b>le résultat de l'opération est égale à la cible proposée alors son score augmente entre 3 et 0,5 point quand la cible est inférieure à 50 et entre 4 et 0,5 point si elle dépasse 50</b> (il est possible de changer de limite en cours de partie) et une nouvelle cible est proposée ; sinon les nombres sélectionnés sont effacés et la main passe à son adversaire.<br />
+		- puis il clique sur le bouton "VERIFIER" ; si <b>le résultat de l'opération est égal à la cible proposée alors son score augmente entre 3 et 0,5 point quand la cible est inférieure à 50 et entre 4 et 0,5 point si elle dépasse 50</b> (il est possible de changer de limite en cours de partie) et une nouvelle cible est proposée ; sinon les nombres sélectionnés sont effacés et la main passe à son adversaire.<br />
 	  </p>
 	</div>
 </div>
@@ -124,7 +124,8 @@ function confirmbox( boxTitre , boxTexte , boxHauteur , boxLargeur , boxbool)
  chemin="trio_fichiers/";
 
 //prechargement des images
-var img1 = new Image();img1.src=chemin+"cadrea.gif";  
+var img1 = new Image();img1.src=chemin+"cadreb.png";  
+var img9 = new Image();img9.src=chemin+"cadrev.png";  
 var img2 = new Image();img2.src=chemin+"rond50.gif";  
 var img3 = new Image();img3.src=chemin+"plus.gif";  
 var img4 = new Image();img4.src=chemin+"moins.gif";  
@@ -643,7 +644,7 @@ function Verifier_automatiquement() {
   else {
   if (nombre_cible[partie_actuelle] == (resultat_operation - Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]])) { Operation[0]="-"; Verifier(); }
   else {
-  alertbox("AVERTISSEMENT :","<CENTER>Le résultat ne peut être égale au nombre cible !<BR/>La main passe à l'autre joueur.</CENTER>",140,300);
+  alertbox("AVERTISSEMENT :","<CENTER>Le résultat ne peut être égal au nombre cible !<BR/>La main passe à l'autre joueur.</CENTER>",140,300);
   contenu_div_historique_debut+="- J"+joueur+" : "+Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]+" x "+Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]]+" ± "+Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]+" = ERREUR<br/>";
     if (partie_commencee) { document.getElementById('div_historique').innerHTML = contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique; }
   // ci-dessous je laisse volontaire le joueur sur le même numéro car changer_joueur va s'occuper de le changer dès sa prochaine exécution mais avec 411 et 9 à la place de 410 et 10 j'indique que l'historique a été complété
@@ -677,7 +678,7 @@ else {alertbox("AVERTISSEMENT :","<CENTER>Il faut choisir entre + et -<BR/>en cl
     if (Operation[0]=="+") { resultat_operation += Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]; }
     else { resultat_operation -= Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]; }
     if (resultat_operation!=nombre_cible[partie_actuelle]) {
-    alertbox("AVERTISSEMENT :","<CENTER>Le résultat de l'opération<BR/>n'est pas égale au nombre cible !<BR/>La main passe à l'autre joueur.</CENTER>",160,300);
+    alertbox("AVERTISSEMENT :","<CENTER>Le résultat de l'opération<BR/>n'est pas égal au nombre cible !<BR/>La main passe à l'autre joueur.</CENTER>",160,300);
     contenu_div_historique_debut+="- J"+joueur+" : "+Plateau[partie_actuelle][Operation["x_nombre1"]][Operation["y_nombre1"]]+" x "+Plateau[partie_actuelle][Operation["x_nombre2"]][Operation["y_nombre2"]]+" "+Operation[0]+" "+Plateau[partie_actuelle][Operation["x_nombre3"]][Operation["y_nombre3"]]+" = ERREUR<br/>";
     if (partie_commencee) { document.getElementById('div_historique').innerHTML = contenu_div_historique_debut+"<br/><br/><HR><center><i>Anciennes manches<br/>ci-dessous :</i></center>"+contenu_div_historique; }
     // ci-dessous je laisse volontaire le joueur sur le même numéro car changer_joueur va s'occuper de le changer dès sa prochaine exécution mais avec 411 et 9 à la place de 410 et 10 j'indique que l'historique a été complété
@@ -1036,8 +1037,11 @@ function alert_repartition() {
 }
 
 function mOver(image,i,j) {
-  if ((Grille[i][j]) || (pauseBool)) {}
-  else {image.src=chemin+"cadrea.gif";}
+  if (Grille[i][j]) {}
+  else {
+	if (etape==2) { image.src=chemin+"cadrev.png"; }
+	else { image.src=chemin+"cadreb.png"; }
+  }
 }
 
 function mOut(image,i,j) {

@@ -72,7 +72,7 @@ ul.yetii a.selected  {
     border: 1px solid #DDDDDD !important;
     border-radius: 0 4px 4px !important;
     margin: 0 !important;
-    padding: 30px !important;
+    padding: 5px !important; /* 30 à l'origine */
     position: relative !important;
 }
 /*div.tab > div {

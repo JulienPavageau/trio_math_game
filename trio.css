@@ -5,10 +5,20 @@ body {
 	font-family: Helvetica, Arial, FreeSans, sans-serif;
 }
 
-p.infotip-jck {
-    font-size: 14px;
-    line-height: 1.7em;
+a {
+    text-decoration: none;
+	color: #78ACE7;
+    outline: none;
+}
 
+a:hover {
+    color: #000;
+}
+
+fieldset.fieldsetm {
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
 }
 
 /* The Modal (background) */
