@@ -14,6 +14,7 @@ if (is_file($nomfichier)) {
 	date_default_timezone_set('Europe/Paris');
 	$fdistosl = fopen($nomfichier, "r");
 	$md5_fait=true; // par défaut on suppose les mots de passe sont déjà hashés dans etab.csv mais c'est possible de s'en passer
+	$numligne = 0;
 	while ((!feof($fdistosl)) && (!$coordo_verifie)) {
 		if ($numligne!=0) if ($erreurfichier) echo "Le fichier etab.csv semble incohérent à la ligne ".$numligne.". Ca vient peut être du .csv qui a une dernière ligne vide. Sinon, les données doivent être séparées par des points virgules.";
 		$erreurfichier=false;
@@ -42,18 +43,22 @@ if (is_file($nomfichier)) {
 	fclose($fdistosl);
 	if ($coordo_verifie) {
 		$compteur["Concours.txt"] = 0;
+		$compteur["Competition.txt"] = 0;
 		$compteur["Classique.txt"] = 0;
 		$compteur["UnPourToutes.txt"] = 0;
 		$compteur["TousPourUne.txt"] = 0;
 		$compteur["Classe.txt"] = 0;
-		$tableau["DEBUT"] = "<TABLE cellpadding=0 cellspacing=0 border=1><tbody><TR valign='middle' align='center'><TD width=50><b>n°</b></TD><TD width=300><b>Identifiant</b></TD><TD width=100><b>Score</b></TD><TD width=200><b>Date/Heure</b></TD></TR>";
-		$tableau["Concours.txt"] = "<H3>VARIANTE CONCOURS</H3>".$tableau["DEBUT"];
+		$tableau["DEBUT"] = "<TABLE cellpadding=0 cellspacing=0 border=1><tbody><TR valign='middle' align='center'><TD width=100><b>n°</b></TD><TD width=300><b>Identifiant</b></TD><TD width=100><b>Score</b></TD><TD width=200><b>Date/Heure</b></TD></TR>";
+		$tableau["DEBUT_BIS"] = "<TABLE cellpadding=0 cellspacing=0 border=1><tbody><TR valign='middle' align='center'><TD width=150><b>Code</b></TD><TD width=250><b>Identifiant</b></TD><TD width=100><b>Score</b></TD><TD width=200><b>Date/Heure</b></TD></TR>";
+		$tableau["DEBUT_CLASSE"] = "<TABLE cellpadding=0 cellspacing=0 border=1><tbody><TR valign='middle' align='center'><TD width=100><b>n°</b></TD><TD width=300><b>Identifiant</b></TD><TD width=100><b>Trios</b></TD><TD width=200><b>Date/Heure</b></TD></TR>";
+		$tableau["Concours.txt"] = "<H3>VARIANTE CONCOURS</H3>".$tableau["DEBUT_BIS"];
+		$tableau["Competition.txt"] = "<H3>COMPÉTITIONS</H3><i>Cliquez sur le code pour consulter l'historique complet de tous les scores.</i><br/>".$tableau["DEBUT_BIS"];
 		$tableau["Classique.txt"] = "<H3>VARIANTE CLASSIQUE</H3>".$tableau["DEBUT"];
 		$tableau["UnPourToutes.txt"] = "<H3>VARIANTE UN POUR TOUTES</H3>".$tableau["DEBUT"];
 		$tableau["TousPourUne.txt"] = "<H3>VARIANTE TOUS POUR UNE</H3>".$tableau["DEBUT"];
-		$tableau["Classe.txt"] = "<H3>VARIANTE POUR LA CLASSE</H3>".$tableau["DEBUT"];
+		$tableau["Classe.txt"] = "<H3>VARIANTE POUR LA CLASSE</H3><i>Il n'y a pas de score ici donc c'est le nombre de trios validés qui est indiqué.</i><br/>".$tableau["DEBUT_CLASSE"];
 		if ($num_coordo == 2) { //cas où la demande est faite par l'"administrateur" (celui qui est au début du fichier etab.csv)
-			$xls = "etab;variante;identifiant;score;date_heure\n";
+			$xls = "etab;variante;identifiant;score;date_heure;code\n";
 			$fdistosl = fopen($nomfichier, "r");
 			$dir = "data/export"; // c est juste pour se placer dans un sous dossier de data pour pouvoir répéter le chdir plus bas 
 			chdir($dir);
@@ -69,12 +74,14 @@ if (is_file($nomfichier)) {
 					} else {
 						$tableau["debut_etab"] = "<TR valign='middle' align='center'><TD colspan='4'>Sauvegarde pour : ".$etab."</TD></TR>";
 						$tableau["Concours.txt"] .= $tableau["debut_etab"];
+						$tableau["Competition.txt"] .= $tableau["debut_etab"];
 						$tableau["Classique.txt"] .= $tableau["debut_etab"];
 						$tableau["UnPourToutes.txt"] .= $tableau["debut_etab"];
 						$tableau["TousPourUne.txt"] .= $tableau["debut_etab"];
 						$tableau["Classe.txt"] .= $tableau["debut_etab"];
 						$xls_etab = "";
 						$dir = "../".$etab;
+						if (!is_dir($dir)) mkdir($dir,0755);
 						chdir($dir);
 						array_multisort(array_map('filemtime', ($files = glob("*.*", GLOB_BRACE))), SORT_DESC, $files);
 						foreach($files as $filename) {
@@ -82,12 +89,26 @@ if (is_file($nomfichier)) {
 								list($pseudo,$pass,$jeu)=explode("_", $filename);
 								$varia=(unserialize((file_get_contents($filename))));
 								$compteur[$jeu]++;
-								$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=50>".$compteur[$jeu]."</TD><TD width=300>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
-								$xls_etab.= $etab.";".substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["ScoreJson"].";".date ("d F Y H:i:s", filemtime($filename))."\n";
+								if (($jeu == "Competition.txt") || ($jeu == "Concours.txt"))  { 
+									if ($jeu == "Competition.txt")  {
+										$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=150><a href='charge_scores.php?code=".$varia["PlateauJson"][0][0]."' target='_blank'>".$varia["PlateauJson"][0][0]."</a></TD><TD width=250>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+									} else {
+										$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=150>".$varia["PlateauJson"][0][0]."</TD><TD width=250>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+									}
+									$xls_etab.= $etab.";".substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["ScoreJson"].";".date ("d F Y H:i:s", filemtime($filename)).";".$varia["PlateauJson"][0][0]."\n";
+								} else {
+									if ($jeu == "Classe.txt")  {
+										$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=100>".$compteur[$jeu]."</TD><TD width=300>".$pseudo."</TD><TD width=100>".$varia["JeuxJson"][0]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+										$xls_etab.= $etab.";".substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["JeuxJson"][0].";".date ("d F Y H:i:s", filemtime($filename)).";vide\n";
+									} else {
+										$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=100>".$compteur[$jeu]."</TD><TD width=300>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+										$xls_etab.= $etab.";".substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["ScoreJson"].";".date ("d F Y H:i:s", filemtime($filename)).";vide\n";
+									}
+								}
 							}
 						}
 						$xls .= $xls_etab;
-						$xls_etab = "etab;variante;identifiant;score;date_heure\n".$xls_etab;
+						$xls_etab = "etab;variante;identifiant;score;date_heure;code\n".$xls_etab;
 						file_put_contents("../export/".$etab.".csv",$xls_etab);
 					}
 				}
@@ -95,8 +116,9 @@ if (is_file($nomfichier)) {
 			file_put_contents("../export/export.csv",$xls);
 			fclose($fdistosl);
 		} else {
-			$xls = "variante;identifiant;score;date_heure\n";
+			$xls = "variante;identifiant;score;date_heure;code\n";
 			$dir = $chemin_data.$letab;
+			if (!is_dir($dir)) mkdir($dir,0755);
 			chdir($dir);
 			array_multisort(array_map('filemtime', ($files = glob("*.*", GLOB_BRACE))), SORT_DESC, $files);
 			foreach($files as $filename) {
@@ -104,14 +126,29 @@ if (is_file($nomfichier)) {
 					list($pseudo,$pass,$jeu)=explode("_", $filename);
 					$varia=(unserialize((file_get_contents($filename))));
 					$compteur[$jeu]++;
-					$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=50>".$compteur[$jeu]."</TD><TD width=300>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
-					$xls.= substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["ScoreJson"].";".date ("d F Y H:i:s", filemtime($filename))."\n";
+					if (($jeu == "Competition.txt") || ($jeu == "Concours.txt"))  { 
+						if ($jeu == "Competition.txt")  {
+							$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=150><a href='charge_scores.php?code=".$varia["PlateauJson"][0][0]."' target='_blank'>".$varia["PlateauJson"][0][0]."</a></TD><TD width=250>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+						} else {
+							$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=150>".$varia["PlateauJson"][0][0]."</TD><TD width=250>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+						}
+						$xls.= substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["ScoreJson"].";".date ("d F Y H:i:s", filemtime($filename)).";".$varia["PlateauJson"][0][0]."\n";
+					} else {
+						if ($jeu == "Classe.txt")  {
+							$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=100>".$compteur[$jeu]."</TD><TD width=300>".$pseudo."</TD><TD width=100>".$varia["JeuxJson"][0]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+							$xls.= substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["JeuxJson"][0].";".date ("d F Y H:i:s", filemtime($filename)).";vide\n";
+						} else {
+							$tableau[$jeu] .= "<TR valign='middle' align='center'><TD width=100>".$compteur[$jeu]."</TD><TD width=300>".$pseudo."</TD><TD width=100>".$varia["ScoreJson"]."</TD><TD width=200>".date ("d F Y H:i:s", filemtime($filename))."</TD></TR>";
+							$xls.= substr($jeu, 0, strpos($jeu, ".")).";".$pseudo.";".$varia["ScoreJson"].";".date ("d F Y H:i:s", filemtime($filename)).";vide\n";
+						}
+					}
 				}
 			}
 			file_put_contents("export.csv",$xls);
 		}
 		$tableau["VIDE"] = "<TR valign='middle' align='center'><TD colspan='4'><i>Aucune sauvegarde pour cette variante.</i></TD></TR>";
 		if ($compteur["Concours.txt"] == 0) { $tableau["Concours.txt"] .= $tableau["VIDE"]; }
+		if ($compteur["Competition.txt"] == 0) { $tableau["Competition.txt"] .= $tableau["VIDE"]; }
 		if ($compteur["Classique.txt"] == 0) { $tableau["Classique.txt"] .= $tableau["VIDE"]; }
 		if ($compteur["UnPourToutes.txt"] == 0) { $tableau["UnPourToutes.txt"] .= $tableau["VIDE"]; }
 		if ($compteur["TousPourUne.txt"] == 0) { $tableau["TousPourUne.txt"] .= $tableau["VIDE"]; }
@@ -122,7 +159,7 @@ if (is_file($nomfichier)) {
 		} else {
 			$contenu .= "<br/>Vous trouverez ci-dessous un lien pour télécharger un fichier au format csv (à ouvrir avec un tableur)<br/> qui contient un résumé de toutes les sauvegardes présentes actuellement dans votre dossier :<br/><a href='data/".$etab."/export.csv'>votre fichier csv</a><br/><br/>";	
 		}
-		$contenu .= "Vous trouverez également ci-dessous des tableaux contenant ces informations classées par variante :<br/>".$tableau["Concours.txt"].$tableau["FIN"].$tableau["Classique.txt"].$tableau["FIN"].$tableau["UnPourToutes.txt"].$tableau["FIN"].$tableau["TousPourUne.txt"].$tableau["FIN"].$tableau["Classe.txt"].$tableau["FIN"];
+		$contenu .= "Vous trouverez également ci-dessous des tableaux contenant ces informations classées par variante :<br/>".$tableau["Concours.txt"].$tableau["FIN"].$tableau["Competition.txt"].$tableau["FIN"].$tableau["Classique.txt"].$tableau["FIN"].$tableau["UnPourToutes.txt"].$tableau["FIN"].$tableau["TousPourUne.txt"].$tableau["FIN"].$tableau["Classe.txt"].$tableau["FIN"];
 		$dir = "..";
 		chdir($dir);
 		if ($num_coordo == 2) { 
@@ -131,7 +168,9 @@ if (is_file($nomfichier)) {
 			$contenu .= "</p></div><H3>LOGS CHARGEMENTS</H3><div style='border: 1px black solid; overflow:auto;height:300px;'><P align='left'>";
 			$contenu .= nl2br(file_get_contents("logs_load.txt"));
 			$contenu .= "</p></div><H3>LOGS COORDONNATEURS</H3><div style='border: 1px black solid; overflow:auto;height:300px;'><P align='left'>";
-			$contenu .= nl2br(file_get_contents("logs_coordo.txt"))."</p></div>";
+			$contenu .= nl2br(file_get_contents("logs_coordo.txt"));
+			$contenu .= "</p></div><H3>LOGS CHARGEMENT DES SCORES COMPETITIONS</H3><div style='border: 1px black solid; overflow:auto;height:300px;'><P align='left'>";
+			$contenu .= nl2br(file_get_contents("logs_charge_scores.txt"))."</p></div>";
 		}
 		file_put_contents("logs_coordo.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$letab."/".$lelogin."/".$lepass." a réussi depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
 	} else {

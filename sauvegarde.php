@@ -65,14 +65,28 @@ if ((!empty($json))&&(!empty($lelogin))&&(!empty($lepass))&&(!empty($lavariante)
 			print "3";
 		}
 	} else {
-		file_put_contents($chemin_data.$letab."/".$lelogin."_".$lepass."_".$lavariante.".txt",(serialize($json)));
-		header("Content-type: application/json");
-		if (strcasecmp($letab,"visiteur")==0){
-			$inscrit=" (enregistré comme visiteur)";
-			print "3";
+		if (strcasecmp($letab,"sourcescompetitions")==0){
+			if (is_file($chemin_data.$letab."/".$lelogin."_".$lepass."_".$lavariante.".txt")){
+				$lemail="non";
+				$inscrit=" = COMPETITION déjà existante";
+				print "3";
+			} else {
+				file_put_contents($chemin_data.$letab."/".$lelogin."_".$lepass."_".$lavariante.".txt",(serialize($json)));
+				header("Content-type: application/json");
+				$inscrit=" = NOUVELLE COMPETITION";
+				file_put_contents($chemin_data.$letab."/".$lelogin.".csv","identifiant (etablissement);score;".strftime("%d/%m/%y à %H:%M:%S")."\n");
+				print "1";
+			}
 		} else {
-			$inscrit=" (enregistré dans ".$letab.")";
-			print "2";
+			file_put_contents($chemin_data.$letab."/".$lelogin."_".$lepass."_".$lavariante.".txt",(serialize($json)));
+			header("Content-type: application/json");
+			if (strcasecmp($letab,"visiteur")==0){
+				$inscrit=" (enregistré comme visiteur)";
+				print "3";
+			} else {
+				$inscrit=" (enregistré dans ".$letab.")";
+				print "2";
+			}
 		}
 	}
 
@@ -87,7 +101,15 @@ if ((!empty($json))&&(!empty($lelogin))&&(!empty($lepass))&&(!empty($lavariante)
 		}
 	}
 
-	file_put_contents($chemin_data."logs.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$lelogin.$inscrit." a sauvé ".$lavariante." (score=".$json["ScoreJson"].") depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
+	if (strcasecmp($letab,"sourcescompetitions")==0){
+		file_put_contents($chemin_data."logs.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$lelogin.$inscrit." depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
+	} else {
+		if (strcasecmp($lavariante,"Competition")==0){
+			file_put_contents($chemin_data."sourcescompetitions/".$json["PlateauJson"][0][0].".csv",$lelogin.$inscrit.";".$json["ScoreJson"].";".strftime("%d/%m/%y à %H:%M:%S")."\r\n",FILE_APPEND);
+		} else {
+			file_put_contents($chemin_data."logs.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$lelogin.$inscrit." a sauvé ".$lavariante." (score=".$json["ScoreJson"].") depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
+		}
+	}
 
 }
 

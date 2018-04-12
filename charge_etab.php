@@ -7,6 +7,7 @@
 if (is_file($nomfichier)) {
 	$fdistosl = fopen($nomfichier, "r");
 	$selected_fait=false;
+	$numligne = 0;
 	while (!feof($fdistosl)) {
 		if ($numligne!=0) if ($erreurfichier) echo "Le fichier etab.csv semble incohérent à la ligne ".$numligne.". Ca vient peut être du .csv qui a une dernière ligne vide. Sinon, les données doivent être séparées par des points virgules.";
 		$erreurfichier=false;

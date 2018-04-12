@@ -32,12 +32,16 @@ Version 1.0 du 18 05 2017
 Version 1.1 du 18 05 2017
 * ajout de la version Duel Ping Pong qui est indépendante
 
-Version 2 du 12 02 2018
-* Nettoyage du code de index.html (en particulier le code javascript est à présent réuni après le html)
-* Nouvel affichage sous forme d'onglets pour faciliter l'intégration dans un iframe et améliorer l'utilisation sur tablette avec possibilité de passer en plein écran
-* Intégration de Font Awesome (https://fortawesome.com) pour agrémenter l'interface avec quelques icônes
-* Tous les établissements peuvent à présent utiliser l'identification en plaçant un fichier mdp.csv dans leur dossier
-* La liste des établissements est à présent dynamique (renseignée par un script PHP qui consulte etab.csv) et le formulaire "Arrêter ou reprendre une partie :" ne s'affiche que si les scripts PHP sont actifs
-* Les coordonnateurs peuvent afficher les sauvegardes de leurs élèves et télécharger ces informations sous la forme d'un csv
-* Le coordonnateur du 1er établissement peut faire de même mais avec tous les établissements et consulter les logs sur la même page
-* Il y a un avertissement si on tente de charger un score plus bas que celui de la partie en cours...
+Version 2.0 du 12 02 2018
+* nettoyage du code de index.html (en particulier le code javascript est à présent réuni après le html)
+* nouvel affichage sous forme d'onglets pour faciliter l'intégration dans un iframe et améliorer l'utilisation sur tablette avec possibilité de passer en plein écran
+* intégration de Font Awesome (https://fortawesome.com) pour agrémenter l'interface avec quelques icônes
+* tous les établissements peuvent à présent utiliser l'identification en plaçant un fichier mdp.csv dans leur dossier
+* la liste des établissements est à présent dynamique (renseignée par un script PHP qui consulte etab.csv) et le formulaire "Arrêter ou reprendre une partie :" ne s'affiche que si les scripts PHP sont actifs
+* les coordonnateurs peuvent afficher les sauvegardes de leurs élèves et télécharger ces informations sous la forme d'un csv
+* le coordonnateur du 1er établissement peut faire de même mais avec tous les établissements et consulter les logs sur la même page
+* il y a un avertissement si on tente de charger un score plus bas que celui de la partie en cours...
+
+Version 2.1 du 12 04 2018
+* Concours 2018 + Corrections petits bugs
+* Mode Compétition : Création, Chargement, Sauvegarde et consultation des scores

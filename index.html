@@ -66,12 +66,19 @@
 			</p>
 		</div>
 		<div class="tab" id="tab3" style="height:550px;width:880px;">
-			<p align="justify">
+			<div align="justify">
 				<u><b>Un</b> (trio) <b>pour toutes</b> (les cibles) :</u> le cadre noir ne contient plus véritablement un score mais les 91 cibles possibles (ce nombre n'est pas modifiable dans cette variante sauf si vous choisissez dans l'onglet "Options" de remplir votre plateau avec des nombres relatifs), le but est alors d'essayer de trouver un seul trio pour chacune de ces cibles.<i> Il est possible de sélectionner directement dans la zone score la cible à atteindre ou d'utiliser le bouton "CHANGER LA CIBLE" pour passer à la suivante.</i><br /><br />
 				<u><b>Tous</b> (les trios possibles) <b>pour une</b> (cible) :</u> cette fois-ci la cible est fixée "définitivement" dès le début de la partie et le but est alors d'essayer de trouver tous les trios qui l'atteignent. <i>Le bouton "CHANGER LA CIBLE" n'est plus actif quand la partie est commencée, pour modifier la cible il faudra recommencer entièrement la partie en utilisant le bouton "REINITIALISER TOUTES LES PARTIES" dans l'onglet "Options". C'est dans cet onglet que vous trouverez également la possibilité d'obtenir une cible avec un minimum de trios valables pour le plateau en cours.</i><br /><br />
 				<u><b>Pour la classe</b> :</u> cette dernière variante est adaptée pour une pratique en classe car elle laisse toute liberté à l'enseignant qui peut conserver une cible aussi longtemps qu'il le souhaite ou en tirer au sort une nouvelle avec le bouton "CHANGER LA CIBLE" voire la sélectionner lui même dans la zone SCORE (il n'y a plus de notion de score dans cette variante). <i>Pour changer le plateau, il faudra utiliser le bouton "REINITIALISER TOUTES LES PARTIES" de l'onglet "Options" dans lequel vous pourrez également le personnaliser. Dans ce même onglet, la section "Pour la Classe" contient aussi deux fonctionnalités réservées à une utilisation en classe...</i><br /><br />
-				<u><b>Duel Ping-Pong</b> :</u> il s'agit d'une version très différente qui se trouve dans <a href="duelpingpong.html" target="_blank">cette page</a> où il est à présent possible de s'affronter à 2. <i>Il suffit pour cela que les deux joueurs se placent côte à côte face à l'écran avec la souris ou la tablette placée à portée de main des deux joueurs. A chaque manche, les deux adversaires doivent alors, à tour de rôle, tenter d'atteindre la cible qui passera de l'un à l'autre (le nombre de point à gagner diminue au fur et à mesure que le temps s'écoule).</i>
-			</p>
+				<u><b>Duel Ping-Pong</b> :</u> il s'agit d'une version très différente qui se trouve dans <a href="duelpingpong.html" target="_blank">cette page</a> où il est à présent possible de s'affronter à 2. <i>Il suffit pour cela que les deux joueurs se placent côte à côte face à l'écran avec la souris ou la tablette placée à portée de main des deux joueurs. A chaque manche, les deux adversaires doivent alors, à tour de rôle, tenter d'atteindre la cible qui passera de l'un à l'autre (le nombre de point à gagner diminue au fur et à mesure que le temps s'écoule).</i><br /><br />
+				<u><b>Compétition</b> :</u> il ne s'agit pas véritablement d'une variante car elle s'appuie entièrement sur la version Classique mais elle permet d'organiser des parties à la manière des finales (voir l'onglet des records) où tous les participants travaillent sur la même grille avec les mêmes cibles. Ces cibles sont toutes accessibles, la première est toujours 90 (un triplet de 9 est systématiquement présent au centre de la grille) et les 50 suivantes sont choisies pour être accessibles par au moins 20 trios. Pour limiter la triche, la grille subit de manière aléatoire des quarts de tour ou des retournements et les 13 premières cibles subissent des permutations.
+				<CENTER><FORM name='FormCodeCompet'>
+					Saisir votre code compétition : <INPUT type='text' name='code_compet' onchange="" size=13 value=''>
+					<INPUT type='button' value='CREER CE CODE' onclick='CreerCodeCompet();'>
+					<INPUT type='button' value='CHARGER CE CODE' onclick='ChargerCodeCompet();'>
+					<INPUT type='button' value='VOIR LES SCORES' onclick='VoirCodeCompet();'>
+				</FORM></CENTER>
+			</div>
 		</div>
 		<div class="tab" id="tab4" align="left" style="height:550px;width:880px;">
 			<br/>
@@ -103,11 +110,19 @@
 			</FORM>
 		</div>
 		<div class="tab" id="tab5" style="height:550px;width:880px;">
+			<br/>
 			<table cellspacing="0" align="center" border="1" width="100%">
 			  <tbody align="left">
 				<tr align="center" width="100%">
 				  <td colspan="3"><center>RECORDS AVEC LA VARIANTE <b>CLASSIQUE</b></center>
 				  </td>
+				</tr>
+				<tr align="center">
+				  <td width="10%"><CENTER><b>2 317 points</b></CENTER>
+				  </td>
+				  <td width="30%"><b>Jean R.</b> (5E 6 SIRANI) le 04/04/2018
+				  </td>
+				  <td width="60%"><I>avec 1 098 trios validés</I></td>
 				</tr>
 				<tr align="center">
 				  <td width="10%"><CENTER><b>1 395 points</b></CENTER>
@@ -145,8 +160,15 @@
 				  <td width="60%"><I>avec 191 trios validés</I></td>
 				</tr>
 				<tr align="center">
-				  <td colspan="3"><center>RECORDS AVEC LA VARIANTE <a href="http://acamus.net/index.php?option=com_content&view=article&id=326:finale-trio&catid=41&Itemid=219" target="_blank"><b>FINALE</b></a> (homologué en 30 min chrono)</center>
+				  <td colspan="3"><center>RECORDS EN MODE <b>COMPÉTITION</b> (homologués en 30 min chrono)</center>
 				  </td>
+				</tr>
+				<tr align="center">
+				  <td width="10%"><CENTER><b>245 points</b></CENTER>
+				  </td>
+				  <td width="30%"><b>Axel P.</b> (3E 6 ASSK) le 29/03/2018 
+				  </td>
+				  <td width="60%"><I>réalisé lors de la finale 2018 du concours <a href="http://acamus.net/index.php?option=com_content&view=article&id=322:concours-trio&catid=41&Itemid=219" target="_blank">"Si tu gagnes au TRIO alors tu passes PRIO..."</a></I></td>
 				</tr>
 				<tr align="center">
 				  <td width="10%"><CENTER><b>285 points</b></CENTER>
@@ -265,7 +287,7 @@ chemin="trio_fichiers/";
 // ************** MES SCRIPTS **************
 //
 // Auteur : Julien PAVAGEAU  
-// Dernière modification : 12/02/2018
+// Dernière modification : 12/04/2018
 // GitHub : https://github.com/JulienPavageau/trio_math_game
 
 //prechargement des images
@@ -302,9 +324,20 @@ chemin="trio_fichiers/";
 	debut_plateau = 1; ligne0 = "ABCDEFGHI"; colonne0 = "123456789";
 	fin_plateau = 9;t_case = 50;
 	nombres_relatifs = 0; // 0 pour n'avoir que des positifs et 1 pour avoir des relatifs
-	// pour le concours (à noter qu'il faut que debut_plateau soit à 1) : comme pour json et la sauvegarde sur le site c'est la même variante (cela devrait éviter d'avoir à toucher trop au script) qui servira pour tous les "Concours" je placerai un code dans Plateau[0][0] pour éviter de charger un concours qui n'existe plus
-	//2014 et 2015 et 2016
-	concours_actuel = "s_math_2017"; // à remplacer par s_math_2018 quand le concours commencera
+//****************************************************************
+//********************* DEBUT CONCOURS ***************************
+//****************************************************************
+// Cette variante qui ne s'active qu'à la main en touchant à cette partie du code HTML n'est prévu que pour organiser des concours très ponctuels sur la base de Un pour Toutes
+// Pour pouvoir lancer plusieurs concours sans avoir à effacer les sauvegardes, un code est placé dans Plateau[0][0] pour éviter de charger un ancien concours
+	concours_actuel = "s_math_2018"; // à remplacer par s_math_2018 quand le concours commencera
+	concours_ouvert = false;
+	fin_concours = "jusqu'à<BR/> dimanche 18 mars 20h";
+	fin_concours_chargement = "jusqu'à dimanche 18 mars 20h.";
+// Il reste plus qu'à adapter le contenu du plateau qui est défini plus loin, pour le trouver il suffit de chercher "PLATEAU CONCOURS"
+// On pourra s'aider des boutons de la variantes pour la classe pour choisir un plateau plus ou moins intéressant
+//****************************************************************
+//********************** FIN CONCOURS ****************************
+//****************************************************************
 	contenu_div_jeux ="";
 	partie_actuelle="Classique";
 	// quand le jeu est du type 1 à 90 alors il faut désactiver la mise à jour de affichage_score qui n'existe plus
@@ -359,46 +392,80 @@ chemin="trio_fichiers/";
 	ancien_score_sauvee = 0; // pour éviter de recevoir plusieurs mails quand le joueur clique plusieurs fois sur SAUVER
 	contenu_fieldset_sauver_charger = "<br/><br/><CENTER><i>Il n'est pas possible de charger ou de sauver une partie car les scripts PHP ne sont pas actifs mais le jeu est entièrement fonctionnel.</i></CENTER><br/><br/>";
 	charger_liste_etab = true; // pour désactiver il faut passer à false et remplacer la ligne ci-dessus par contenu_fieldset_sauver_charger = "<LEGEND>Arrêter ou reprendre une partie :</LEGEND><CENTER><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR valign='middle'><TD height=30><SELECT NAME='ListeEtab' SIZE=1><OPTION SELECTED VALUE='college'>Collège A. Camus (Frontenay R-R)</option><OPTION VALUE='visiteur'>Visiteurs</option><OPTION VALUE='beauvoir'>Ecole C. Perrault (Beauvoir/Niort)</option><OPTION VALUE='prisse'>Ecole C. Rossignol (Prissé la C.)</option><OPTION VALUE='rochenard'>Ecole des acacias (La Rochénard)</option><OPTION VALUE='saintsym'>Ecole du Bief (St Symphorien)</option><OPTION VALUE='epannes'>Ecole J. Prévert (Epannes)</option><OPTION VALUE='frontenay'>Ecole B. Compétissa (Frontenay)</option></SELECT></TD></TR></tbody></table></CENTER><CENTER><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR valign='middle'><TD height=30 width=100>Identifiant : </TD><TD height=30 width=90><INPUT type='text' name='Identifiant' size=10 value=''/></TD></TR><TR valign='middle'><TD height=30 width=100>Mot de passe : </TD><TD height=30 width=90><INPUT type='password' name='Motdepasse' size=10 value=''/></TD></TR></tbody></table><I>Les visiteurs choisissent leurs propres identifiants et les élèves du collège doivent utiliser ceux du <a href='javascript:alert_reseau_college();'>réseau</a>. Une seule sauvegarde par variante n'est possible, la dernière écrasera donc la précédente.</i><br/><INPUT type='button' value='SAUVER' onclick='Sauver();'/> <INPUT type='button' value='CHARGER' onclick='Charger();'/></CENTER>";
+	// ci-dessous les variables pour le mode compétition avec en plus Plateau["Competition"] qui est initialisé dans les fonctions charger ou créer de compétition
+	// Pour rappel :  pour qu'un élève puisse charger une competition déjà commencée il doit commencer par charger le code, si la partie existe le booleen passe à true et le code de la competition est placée en mémoire de manière à n'autoriser le chargement que si la sauvegarde chargée correspond bien au code (on peut ainsi fermer une compétition en effacant ou en renommant le fichier de base)
+	Competition = false; // passera à true seulement si on y joue, la variante reste alors Classique (on n'utilise les variables de la "variante" Competition qu'à la création d'une nouvelle compétition)
+	CodeActuel = "";
+	Num_cible_Compet = 0;
+	Cibles_Compet  = new Array;
+	Jeux["Competition"] = new Array;
+	Jeux["Competition"][0] = 0;
+	eviter_alert["charger_competition"] = false ;
 	
 function ajaxJSONPost(jsondata){
 	var envoyer_mail = "non";
 	var fin_alert = "";
-	if (score[partie_actuelle]>=(ancien_score_sauvee+10)) {    
+	var login_sauvegarde = "";
+	var pass_sauvegarde = "";
+	var etab_sauvegarde = "";
+	var variante_sauvegarde = partie_actuelle;
+	if (partie_actuelle == "Competition") {
 		envoyer_mail = "oui";
-		fin_alert = " et le score a également<BR/> été transmis pour l'homologation d'un éventuel record";
-		ancien_score_sauvee=score[partie_actuelle];
+		login_sauvegarde = document.FormCodeCompet.code_compet.value;
+		pass_sauvegarde = md5(document.FormCodeCompet.code_compet.value);
+		etab_sauvegarde = "sourcescompetitions";
+	} else {
+		if (score[partie_actuelle]>=(ancien_score_sauvee+10)) {    
+			envoyer_mail = "oui";
+			fin_alert = " et le score a également<BR/> été transmis pour l'homologation d'un éventuel record";
+			ancien_score_sauvee=score[partie_actuelle];
+		}
+		login_sauvegarde = document.FormChoix.Identifiant.value;
+		pass_sauvegarde = md5(document.FormChoix.Motdepasse.value);
+		if (Competition) {
+			variante_sauvegarde = "Competition";
+		}
+		etab_sauvegarde = document.FormChoix.ListeEtab.value;
 	}
 	jQuery.post(
 							'sauvegarde.php',
 							{
-								login : document.FormChoix.Identifiant.value,
-								pass : md5(document.FormChoix.Motdepasse.value),
-								variante : partie_actuelle,
-								etab : document.FormChoix.ListeEtab.value,
+								login : login_sauvegarde,
+								pass : pass_sauvegarde,
+								variante : variante_sauvegarde,
+								etab : etab_sauvegarde,
 								mail : envoyer_mail,
 								jsondatapost : JSON.stringify(jsondata)
 							},
 							function( data ) {
 								if (data=="1") {
-									//CONCOURS CONCOURS
-									if (FormChoix.ListeVariantes.selectedIndex == 4) { // pour le concours de la semaine des maths
-										alertbox("INFORMATION :","<CENTER>La participation au concours a bien été enregistrée.<BR/>Vous avez encore cependant jusqu'à<BR/> dimanche 19 mars 20h pour améliorer votre score.</CENTER>",150,320);
-										//CONCOURS CONCOURS alertbox("INFORMATION :","<CENTER>La participation au concours de test a bien été enregistrée mais le véritable concours ne commencera que le 14/03/2015.</CENTER>",170,320);
+									if (etab_sauvegarde == "sourcescompetitions") {
+										alertbox("INFORMATION :","<CENTER>Le code Compétition a bien été créé.<BR/>Vous pouvez à présent le communiquer aux participants<BR/> ou le saisir vous-même pour le garder secret.</CENTER>",150,320);
 									} else {
-										alertbox("INFORMATION :","<CENTER>La partie a bien été sauvegardée"+fin_alert+".<BR/>Attention : la sauvegarde sera effacée lors de la prochaine rentrée scolaire.</CENTER>",160,450);
-									};
+										//CONCOURS CONCOURS
+										if (FormChoix.ListeVariantes.selectedIndex == 4) { // pour la variante ponctuelle CONCOURS
+											alertbox("INFORMATION :","<CENTER>La participation au concours a bien été enregistrée.<BR/>Vous avez encore cependant "+fin_concours+" pour améliorer votre score.</CENTER>",150,320);
+											//CONCOURS CONCOURS alertbox("INFORMATION :","<CENTER>La participation au concours de test a bien été enregistrée mais le véritable concours ne commencera que le 14/03/2015.</CENTER>",170,320);
+										} else {
+											alertbox("INFORMATION :","<CENTER>La partie a bien été sauvegardée"+fin_alert+".<BR/>Attention : la sauvegarde sera effacée lors de la prochaine rentrée scolaire.</CENTER>",160,450);
+										};
+									}
 								} else { 
 									if (data=="3") {
-										if (document.FormChoix.ListeEtab.value == "visiteur") {
-											alertbox("INFORMATION :","<CENTER>La partie a bien été enregistrée dans l'espace visiteur"+fin_alert+".<BR/>Attention : la sauvegarde sera probablement effacée lors de<BR/>la prochaine rentrée scolaire voire plus tôt si nécessaire.</CENTER>",180,450);
+										if (etab_sauvegarde == "sourcescompetitions") {
+											alertbox("AVERTISSEMENT :","<CENTER>Ce code Compétition existe déjà !<BR/>Vous devez changer de code ou cliquer sur charger<BR/> si vous voulez participer à cette compétition.</CENTER>",150,320);
 										} else {
-											alertbox("INFORMATION :","<CENTER>Sauf erreur, les identifiants n'appartiennent pas à l'établissement sélectionné.<BR/>La partie a donc été enregistrée dans l'espace visiteur"+fin_alert+".<BR/>Attention : la sauvegarde sera probablement effacée lors de<BR/>la prochaine rentrée scolaire voire plus tôt si nécessaire.</CENTER>",200,450);
+											if (document.FormChoix.ListeEtab.value == "visiteur") {
+												alertbox("INFORMATION :","<CENTER>La partie a bien été enregistrée dans l'espace visiteur"+fin_alert+".<BR/>Attention : la sauvegarde sera probablement effacée lors de<BR/>la prochaine rentrée scolaire voire plus tôt si nécessaire.</CENTER>",180,450);
+											} else {
+												alertbox("INFORMATION :","<CENTER>Sauf erreur, les identifiants n'appartiennent pas à l'établissement sélectionné.<BR/>La partie a donc été enregistrée dans l'espace visiteur"+fin_alert+".<BR/>Attention : la sauvegarde sera probablement effacée lors de<BR/>la prochaine rentrée scolaire voire plus tôt si nécessaire.</CENTER>",200,450);
+											}
 										}
 									} else { 
 										if (data=="2") {
 											//CONCOURS CONCOURS pour que les écoles qui n'ont pas de csv aient le même genre de message que les collégiens
 											if (FormChoix.ListeVariantes.selectedIndex == 4) {
-												alertbox("INFORMATION :","<CENTER>La participation au concours a bien été enregistrée<BR/>dans l'espace réservé à l'école sélectionnée.<BR/>Vous avez encore cependant jusqu'à<BR/> dimanche 19 mars 20h pour améliorer votre score.</CENTER>",180,320);
+												alertbox("INFORMATION :","<CENTER>La participation au concours a bien été enregistrée<BR/>dans l'espace réservé à l'école sélectionnée.<BR/>Vous avez encore cependant "+fin_concours+" pour améliorer votre score.</CENTER>",180,320);
 												//CONCOURS CONCOURS alertbox("INFORMATION :","<CENTER>La participation au concours de test a bien été enregistrée mais le véritable concours ne commencera que le 14/03/2015.</CENTER>",170,320);
 											} else {
 												alertbox("INFORMATION :","<CENTER>La partie a bien été enregistrée dans l'espace réservé à l'établissement sélectionné"+fin_alert+".<BR/>Attention : la sauvegarde sera probablement effacée lors de<BR/>la prochaine rentrée scolaire voire plus tôt si nécessaire.</CENTER>",180,520);
@@ -511,21 +578,32 @@ function Initialisation() {
 
 function NouvelleCible() {
 	var newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((Limite_cible())*Math.random());
-	if (((cibles_possibles_uniquement) && (partie_actuelle != "UnPourToutes")) && (partie_actuelle != "Concours")) {
-		var limite = Math.min(document.FormConfig.borne_sup.value*document.FormConfig.borne_sup.value+Math.abs(document.FormConfig.borne_sup.value),Limite_cible());
-		newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((limite)*Math.random());
-		var compteur = 0;
-		while ((CiblesPossibles[newcible]<document.FormConfig.min_cibles.value) && (compteur<(limite*limite))) {
-			compteur++;
+	if (Competition) {
+		Num_cible_Compet++;
+		if (Num_cible_Compet <= 300) {
+			newcible = Plateau["Classique"][10+Num_cible_Compet];
+		} else {
+			if (Num_cible_Compet == 301) {
+				alertbox("AVERTISSEMENT :","<CENTER>Vous venez de dépasser le nombre limite de cibles prévues en mode Compétition !<BR/>Les prochaines cibles seront choisies de manière aléatoire sans certitude d'être accessibles.</CENTER>",180,500);
+			}
+		}
+	} else {	
+		if (((cibles_possibles_uniquement) && (partie_actuelle != "UnPourToutes")) && (partie_actuelle != "Concours")) {
+			var limite = Math.min(document.FormConfig.borne_sup.value*document.FormConfig.borne_sup.value+Math.abs(document.FormConfig.borne_sup.value),Limite_cible());
 			newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((limite)*Math.random());
+			var compteur = 0;
+			while ((CiblesPossibles[newcible]<document.FormConfig.min_cibles.value) && (compteur<(limite*limite))) {
+				compteur++;
+				newcible = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round((limite)*Math.random());
+			}
 		}
-	}
-	if (compteur==(limite*limite)) {
-		var max_trios = 0;
-		for (var i = ((-1)*nombres_relatifs*limite); i <= limite; i++) {
-			if (CiblesPossibles[i]>max_trios) { max_trios=CiblesPossibles[i]; newcible = i; }
+		if (compteur==(limite*limite)) {
+			var max_trios = 0;
+			for (var i = ((-1)*nombres_relatifs*limite); i <= limite; i++) {
+				if (CiblesPossibles[i]>max_trios) { max_trios=CiblesPossibles[i]; newcible = i; }
+			}
+			alertbox("AVERTISSEMENT :","<CENTER>Aucune cible ne peut plus être atteinte par "+document.FormConfig.min_cibles.value+" trios.<BR/>La limite pour ce plateau est à présent de "+max_trios+" trios.<BR/>La cible proposée correspond à ce maximum.</CENTER>",180,470);
 		}
-		alertbox("AVERTISSEMENT :","<CENTER>Aucune cible ne peut plus être atteinte par "+document.FormConfig.min_cibles.value+" trios.<BR/>La limite pour ce plateau est à présent de "+max_trios+" trios.<BR/>La cible proposée correspond à ce maximum.</CENTER>",180,470);
 	}
 	return newcible;
 }
@@ -548,10 +626,162 @@ function VoirNombreTrios() {
 	}
 }
 
-document.addEventListener('keypress', (event) => {
-	const nomTouche = event.key;
+function ChargerCodeCompet() {
+	if (document.FormCodeCompet.code_compet.value == "") {
+		alertbox("AVERTISSEMENT :","<CENTER>Il faut indiquer un code Compétition !</CENTER>",120,350);
+	}
+	else {
+		jQuery.post(
+							'charge.php',
+							{
+								login: document.FormCodeCompet.code_compet.value,
+								pass: md5(document.FormCodeCompet.code_compet.value),
+								variante: "Competition",
+								etab: "sourcescompetitions"
+							},
+							function( data ) {
+								if (data==1) {
+									alertbox("AVERTISSEMENT :","<CENTER>Ce code n'existe pas ou cette Compétition est terminée !</CENTER>",140,220);
+								}
+								else {
+									TRIOjson=data;
+									if (TRIOjson.PlateauJson[0][0] == "") { // j'ai conservé ce résidu test pour pouvoir facilement ajouter un jour un test de durée ou autre
+										alertbox("AVERTISSEMENT :","<CENTER>C'est pas normal !!!</CENTER>",140,400);
+									}
+									else {
+										if (((score[partie_actuelle] > 1) || (partie_actuelle != "Classique")) && (!eviter_alert["charger_competition"])) {
+											eviter_alert["charger_competition"] = true ;
+											alertbox("AVERTISSEMENT :","<CENTER>Ce code est bien valable et si vous voulez confirmer son chargement il suffit de cliquer à nouveau<BR/> sur le bouton CHARGER CE CODE. Les parties en cours seront cependant écrasées<BR/> par la nouvelle interface du mode Compétition. Il est donc encore temps de les sauvegarder.</CENTER>",140,550);
+										}
+										else { 
+											eviter_alert["charger_competition"] = false ;
+											tabber1.show(1);
+											FormChoix.ListeVariantes.selectedIndex = 0; 
+											Competition = true;
+											CodeActuel = document.FormCodeCompet.code_compet.value;
+											verification_auto = false;
+											FormConfig.form_plusmoins_auto.checked = false;
+											document.FormCodeCompet.code_compet.value =""; // pour permettre à un organisateur de saisir lui même le code et de le cacher automatiquement
+											document.getElementById("tbody_FormChoix").style.display = "none"; // pour faire réaparaître style.display = ""
+											document.getElementById("span_Compet").innerHTML="<FIELDSET class='fieldsetm'><LEGEND><b>MODE COMPÉTITION</b></LEGEND><center>+ 2 si la cible est entre 0 et 50,<BR/>+ 3 entre 51 et 80, + 4 entre 81 et 89,<BR/>+ 5 si la cible est 90<BR/><b>- 1 si changement de cible</b></center></FIELDSET>";
+											if (document.FormChoix.Identifiant.value == "jpavageau") { // pour Passer une info...
+												alertbox("JULIEN :","<CENTER>Ceci est un test si l'identifiant est jpavageau.<BR/>M. PAVAGEAU (faire un commentaire en cas de besoin).</CENTER>",140,420);
+											} else {
+												alertbox("INFORMATION :","<CENTER>Le code a bien été chargé et le jeu est passé en mode Compétition.<BR/>Si vous aviez déjà sauvegardé cette compétition<BR/> vous pouvez à présent la recharger avec le bouton <b>charger</b><BR/>sinon il est conseillé d'effectuer une sauvegarde dès le premier<BR/>trio validé et de le faire régulièrement à l'aide du bouton <b>sauver</b>.<BR/><i>Pour retrouver le menu classique il faut recharger complètement la page.</i></CENTER>",200,500);
+											}
+											TRIOjson.PlateauJson[0][0] = "";
+											nombres_relatifs = 0; // c'est le moyen le plus simple (voir aussi 3 lignes plus loin) que j'ai trouvé pour repérer les sauvegardes faites avec des relatifs
+											var rotation_grille = Math.floor((8)*Math.random());
+											for (var c = 0; c <= 9; c++) {
+												for (var l = 0; l <= 9; l++) {
+													if (Plateau[partie_actuelle][c][l] < 0) {nombres_relatifs = 1;}
+													if ((l == 0) || ((c == 0) || (rotation_grille == 0))) {
+														Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[c][l]; // pas de transformation
+													} else {
+														if (rotation_grille == 1) {
+															Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[l][c]; // symetrie diagonale
+														} else {
+															if (rotation_grille == 2) {
+																Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[10-c][l]; // symétrie axe vertical
+															} else {
+																if (rotation_grille == 3) {
+																	Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[c][10-l]; // symétrie axe horizontal
+																} else {
+																	if (rotation_grille == 4) {
+																		Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[10-c][10-l]; // rotation 180°
+																	} else {
+																		if (rotation_grille == 5) {
+																			Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[10-l][10-c]; // symétrie autre diagonale
+																		} else {
+																			if (rotation_grille == 6) {
+																				Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[10-l][c]; // rotation 90° sens trigo
+																			} else {
+																				Plateau[partie_actuelle][c][l]=TRIOjson.PlateauJson[l][10-c]; // rotation 90° dans l'autre sens
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}											
+											if (Plateau[partie_actuelle][0][0] == "") { debut_plateau = 1;} else { debut_plateau = 0;}
+											Jeux[partie_actuelle][0] = 0;
+											for (var i = -90; i <= 90; i++) {Resultat[partie_actuelle][i][0] = 0;}
+											contenu_div_jeux = "";
+											document.getElementById('divJeux').innerHTML = "";
+											Change_form_divJeux();
+											score[partie_actuelle] = TRIOjson.ScoreJson;
+											var Permutation_debut = Math.floor((12)*Math.random()+1);  
+											for (var i = 0; i <= 12; i++) { 
+												Plateau["Classique"][10+i] = TRIOjson.PlateauJson[10+(Permutation_debut*i)%13];
+											}
+											for (var i = 13; i <= 300; i++) { 
+												Plateau["Classique"][10+i] = TRIOjson.PlateauJson[10+i];
+											}
+											ancien_score_sauvee = score[partie_actuelle];
+											Num_cible_Compet = 0;
+											nombre_cible[partie_actuelle] = Plateau["Classique"][10];
+											document.getElementById("affichage_score").firstChild.nodeValue=score[partie_actuelle];
+											ChangePrio(0);
+											Effacer();
+											ChangeTableau();
+										}
+									}
+								}
+							},
+							'json' // Format des données reçues.
+			).fail(function() { alert('ATTENTION : charge.php ne se termine pas correctement.'); });
+	}
+}
+
+function CreerCodeCompet() {
+	Plateau["Competition"] = new Array; // Plateau va également recevoir les cibles qui seront stockées dans l'ordre dans Plateau["Competition"][10] puis Plateau["Competition"][11] puis ...
+	for (var c = 0; c <= 9; c++) {
+		Plateau["Competition"][c] = new Array;
+		for (var l = 0; l <= 9; l++) {
+			if (partie_actuelle == "Classe") { Plateau["Competition"][c][l]=Plateau["Classe"][c][l]; } // pour me permettre de choisir mon plateau pour l'organisation des finales 
+			else { 
+				Plateau["Competition"][c][l]=Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*(parseFloat(document.FormConfig.borne_inf.value)+Math.floor(((parseFloat(document.FormConfig.borne_sup.value)-parseFloat(document.FormConfig.borne_inf.value))+1)*Math.random()));
+			}
+		}
+	}
+	if (debut_plateau == 1) { EnleverLigne0Colonne0(Plateau["Competition"],Grille); }
+	Plateau["Competition"][10] = 90; Plateau["Competition"][4][4]=9; Plateau["Competition"][5][5]=9; Plateau["Competition"][6][6]=9;
+	var VRAI_partie_actuelle = partie_actuelle; // pour utiliser le script ChercherCiblesPossibles et peut-être d'autres je change temporairement le nom de la partie actuelle
+	partie_actuelle = "Competition"; // cela permet aussi de faire agir différemment les scripts Sauver et Charger en différenciant le fait qu'on soit en train de créer ou charger une compétition et pas en train d'y jouer
+	ChercherCiblesPossibles();
+	for (var i = 1; i <= 50; i++) { // les 50 premières cibles doivent avoir plus de 20 trios
+		do {
+			Plateau["Competition"][10+i] = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round(90*Math.random());
+		} while ((CiblesPossibles[Plateau["Competition"][10+i]] < 20) || (CiblesPossibles[Plateau["Competition"][10+i]] == CiblesPossibles[Plateau["Competition"][10+i-1]]));
+		CiblesPossibles[Plateau["Competition"][10+i]] = CiblesPossibles[Plateau["Competition"][10+i]] - 1;
+	}
+	for (var i = 51; i <= 300; i++) { // les 250 dernières cibles doivent avoir au moins 1 trio
+		do {
+			Plateau["Competition"][10+i] = Math.pow(-1,nombres_relatifs*Math.floor((2)*Math.random()+1))*Math.round(90*Math.random());
+		} while ((CiblesPossibles[Plateau["Competition"][10+i]] < 1)  || (CiblesPossibles[Plateau["Competition"][10+i]] == CiblesPossibles[Plateau["Competition"][10+i-1]]));
+		CiblesPossibles[Plateau["Competition"][10+i]] = CiblesPossibles[Plateau["Competition"][10+i]] - 1;
+	}
+	Sauver();
+	partie_actuelle = VRAI_partie_actuelle;
+	ChercherCiblesPossibles(); // pour reconstruire le tableau des CiblesPossibles qui a été écrasé
+}
+
+function VoirCodeCompet() {
+	if (document.FormCodeCompet.code_compet.value == "") {
+		alertbox("AVERTISSEMENT :","<CENTER>Il faut indiquer un code Compétition !</CENTER>",120,350);
+	}
+	else {
+		window.open('charge_scores.php?code='+document.FormCodeCompet.code_compet.value);
+	}
+}
+
+document.addEventListener('keypress', function (e) {
+	const nomTouche = e.key;
 	if (nomTouche=="+") {VoirTrio();}
-});
+}, false);
 
 function VoirTrio() { //  x_trio = 1;y_trio = 1;test_trio = 0;
 	if (((partie_actuelle=="Classe") || (md5(document.FormChoix.Motdepasse.value)=="36d6ce1013b27a56e9b5f67f296c7fdb")) || ((md5(document.FormChoix.Motdepasse.value)=="b8c55fe0e6e7cb11680fbb8525cc75c5") && (Plateau[partie_actuelle][0][1]=="A"))) {
@@ -750,15 +980,17 @@ function ChercherCiblesPossibles() {
 			}
 		}
 	}
-	for (var n = -lim_sup; n <= lim_sup; n++) {
-		if (Math.abs(n)<91) { // sinon pour l'instant ça poserait des problèmes à cause de résultat[] qui ne dépasse pas 90
-			CiblesPossibles[n] = CiblesPossibles[n] - Resultat[partie_actuelle][n][0];
+	if (partie_actuelle!="Competition") {
+		for (var n = -lim_sup; n <= lim_sup; n++) {
+			if (Math.abs(n)<91) { // sinon pour l'instant ça poserait des problèmes à cause de résultat[] qui ne dépasse pas 90
+				CiblesPossibles[n] = CiblesPossibles[n] - Resultat[partie_actuelle][n][0];
+			}
+			if (max_trio<CiblesPossibles[n]) { max_trio = CiblesPossibles[n]; }
 		}
-		if (max_trio<CiblesPossibles[n]) { max_trio = CiblesPossibles[n]; }
-	}
-	if ((document.FormConfig.min_cibles.value>max_trio) && (cibles_possibles_uniquement)) {
-		alertbox("AVERTISSEMENT :","<CENTER>Aucune cible ne peut être atteinte par "+document.FormConfig.min_cibles.value+" trios.<BR/>La limite pour ce plateau est de "+max_trio+" trios.<BR/>Il est fortement recommandé de fixer cette option bien en dessous.</CENTER>",180,470);
-		document.FormConfig.min_cibles.value = max_trio;
+		if ((document.FormConfig.min_cibles.value>max_trio) && (cibles_possibles_uniquement)) {
+			alertbox("AVERTISSEMENT :","<CENTER>Aucune cible ne peut être atteinte par "+document.FormConfig.min_cibles.value+" trios.<BR/>La limite pour ce plateau est de "+max_trio+" trios.<BR/>Il est fortement recommandé de fixer cette option bien en dessous.</CENTER>",180,470);
+			document.FormConfig.min_cibles.value = max_trio;
+		}
 	}
 }
 
@@ -850,14 +1082,19 @@ function Verifier_automatiquement() {
 }
 
 function Basculer_verification_automatiquement() {
-	if (verification_auto) {
-		verification_auto = false;
-		Operation[0]="0";
-	}
-	else {
-		verification_auto = true;
-		// si on est en mode libre je laisse vérification auto s'activer mais je ne change pas le signe et je fais en sorte qu'elle ne fonctionne pas vraiment tant qu'on ne reclique pas sur le mode original 
-		if (!(document.FormPrio.radio_prio[1].checked)) { window.document.images["image_plusmoins"].src=chemin+"plusmoins.gif"; }
+	if (!(Competition)) {
+		if (verification_auto) {
+			verification_auto = false;
+			Operation[0]="0";
+		}
+		else {
+			verification_auto = true;
+			// si on est en mode libre je laisse vérification auto s'activer mais je ne change pas le signe et je fais en sorte qu'elle ne fonctionne pas vraiment tant qu'on ne reclique pas sur le mode original 
+			if (!(document.FormPrio.radio_prio[1].checked)) { window.document.images["image_plusmoins"].src=chemin+"plusmoins.gif"; }
+		}
+	} else {
+		FormConfig.form_plusmoins_auto.checked = false;
+		alertbox("AVERTISSEMENT :","<CENTER>Cette option n'est pas valable en mode Compétition.</CENTER>",140,300);
 	}
 }
 
@@ -937,7 +1174,6 @@ function Verifier() {
 					}
 					else { //partie est donc forcément pour l'instant UnPourToutes OU Concours
 						var limite_unpourtoutes = 90;
-						//2014          if (partie_actuelle=="Concours") { limite_unpourtoutes = 50; }
 						document.getElementById("cible_"+nombre_cible[partie_actuelle]).innerHTML="<CENTER><span style='font-size: 20pt;text-decoration:line-through;'>"+nombre_cible[partie_actuelle]+"</span></CENTER>";
 						score[partie_actuelle]+=1;
 						if (score[partie_actuelle]<=(limite_unpourtoutes+(nombres_relatifs*limite_unpourtoutes))) {
@@ -973,8 +1209,7 @@ function Change_Nombre_Cible(nb) {
 
 // La fonction ci-dessous a été utilisée pour le rallye mathématiques poitou-charentes 2017
 function RMPC() {
-	document.forms.FormPrio.radio_prio[0].checked = true;
-	ChangePrio(0); // peut-être pas nécessaire
+	ChangePrio(0);
 	nombres_relatifs = 0; // le menu déroulant sur le choix des nombres n'est par contre pas modifié donc il peut y avoir un bug si on revient sur une variante alors que les relatifs sont choisis dans le menu
 	FormChoix.ListeVariantes.selectedIndex = 1
 	partie_actuelle="UnPourToutes";
@@ -1016,8 +1251,7 @@ function ChangeVariantes() {
 	ancien_score_sauvee = 0;
 	if (FormChoix.ListeVariantes.selectedIndex == 0) {
 		partie_actuelle="Classique";
-	}
-	else { 
+	} else { 
 		if (FormChoix.ListeVariantes.selectedIndex == 1) {
 			partie_actuelle="UnPourToutes";
 			document.getElementById("td_score").style.background="url("+chemin+"fond230_noir_grand.gif)";
@@ -1028,77 +1262,74 @@ function ChangeVariantes() {
 			}
 			tableau_cibles+="</TR></tbody></TABLE></div>";
 			document.getElementById("td_score").innerHTML=tableau_cibles;
-		}
-		else { 
-				if (FormChoix.ListeVariantes.selectedIndex == 2) {
-					partie_actuelle="TousPourUne";
-				}
-				else { 
-					if (FormChoix.ListeVariantes.selectedIndex == 3) {
-						partie_actuelle="Classe";
-						// pour l'instant Classe se comporte au niveau de la zone score comme UnPourToutes d'où une simple recopie du script plus haut
+		} else { 
+			if (FormChoix.ListeVariantes.selectedIndex == 2) {
+				partie_actuelle="TousPourUne";
+			} else { 
+				if (FormChoix.ListeVariantes.selectedIndex == 3) {
+					partie_actuelle="Classe";
+					// pour l'instant Classe se comporte au niveau de la zone score comme UnPourToutes d'où une simple recopie du script plus haut
+					document.getElementById("td_score").style.background="url("+chemin+"fond230_noir_grand.gif)";
+					affichage_score_active = false; // car le span nommé affichage_score n'existe plus pour l'instant
+					var tableau_cibles="<div style='overflow:auto; width:210px; height:60;'><TABLE cellpadding=0 cellspacing=0  border=0><tbody><TR valign='middle' align='center'>";
+					for (var i = (nombres_relatifs*(-90)); i <= 90; i++) {
+						tableau_cibles+="<TD height=50 width=50 background='"+chemin+"fond50.gif'><DIV id='cible_"+i+"' style='width:50px;'><CENTER><span style='font-size: 20pt'><a href='javascript:Change_Nombre_Cible("+i+")'>"+i+"</a></span></CENTER><DIV></TD>";
+					}
+					tableau_cibles+="</TR></tbody></TABLE></div>";
+					document.getElementById("td_score").innerHTML=tableau_cibles;
+				} else { 
+					if (FormChoix.ListeVariantes.selectedIndex == 4) {
+						// CONCOURS CONCOURS Attention je n'ai rien touché ici depuis l'ajout des relatifs, il faudra donc vérifier que cela n'a pas d'incidence en particulier si on coche avant ou pendant la variante concours.
+						// comme il s'agit pour l'instant d'une variante basée sur un pour toutes le seul problème se trouve probablement au niveau du changement de cible quand on arrive à 90 et qu'on passe à la suivante...
+						nombres_relatifs = 0; // le menu déroulant sur le choix des nombres n'est par contre pas modifié donc il peut y avoir un bug si on revient sur une variante alors que les relatifs sont choisis dans le menu
+						// cette ligne ci-dessus devrait régler la plupart des problèmes si jamais j'oublie de corriger vraiment le problème
+						alertbox("INFORMATION :","<CENTER>Vous pouvez participer au concours "+fin_concours_chargement+"<BR/>Il ne faut pas oublier de sauver la partie pour valider la participation.<BR/>Si vous avez déjà sauvegardé une partie 'Concours', il faut commencer<BR/>par la charger sinon la nouvelle écrasera l'ancienne.</CENTER>",180,450);
+						//2015    alertbox("INFORMATION :","<CENTER>Le vrai concours ne commencera que le 14/03/2015.<BR/>En attendant, vous pouvez tester le concours avec cette grille de test.<BR/>Si vous avez déjà sauvegardé une partie 'Concours', il faut commencer<BR/>par la charger sinon la nouvelle écrasera l'ancienne.</CENTER>",200,450);
+						partie_actuelle="Concours";
+						debut_plateau = 1; // je ne devrais pas le passer un jour à 0 mais on ne sait jamais...
+						ChangePrio(0);
+						if (score[partie_actuelle]==0) {
+							nombre_cible[partie_actuelle]=0;
+							Resultat[partie_actuelle] = new Array;
+							Plateau[partie_actuelle] = new Array;
+							for (var c = 0; c <= 9; c++) {
+								Plateau[partie_actuelle][c] = new Array;
+								for (var l = 0; l <= 9; l++) {
+									Resultat[partie_actuelle][l*10+c] = new Array;
+									Resultat[partie_actuelle][l*10+c][0] = 0;
+									Resultat[partie_actuelle][(-1)*(l*10+c)] = new Array;
+									Resultat[partie_actuelle][(-1)*(l*10+c)][0] = 0;
+								}
+							}
+						}
+						// ************************************************************************************
+						// CONCOURS CONCOURS PLATEAU CONCOURS (déclaration du plateau fixe colonne par colonne)
+						// ************************************************************************************
+						Plateau[partie_actuelle][0] = ["","1","2","3","4","5","6","7","8","9"];Plateau[partie_actuelle][1] = ["A",9,7,5,3,8,6,2,5,1];Plateau[partie_actuelle][2] = ["B",4,3,6,9,1,8,1,5,2];Plateau[partie_actuelle][3] = ["C",1,1,3,6,5,9,2,2,2];Plateau[partie_actuelle][4] = ["D",9,4,6,8,4,9,1,6,3];Plateau[partie_actuelle][5] = ["E",3,7,3,3,7,9,8,3,2];Plateau[partie_actuelle][6] = ["F",9,4,6,9,3,5,9,2,5];Plateau[partie_actuelle][7] = ["G",9,3,8,7,8,8,9,2,5];Plateau[partie_actuelle][8] = ["H",2,6,4,6,8,5,5,5,8];Plateau[partie_actuelle][9] = ["I",1,1,3,6,6,9,3,2,2];
+						//Plateau[partie_actuelle][0] = ["","","","T","E","S","T","","",""];
+						//Plateau[partie_actuelle][1] = ["M",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][2] = ["A",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][3] = ["R",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][4] = ["S",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][5] = ["-",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][6] = ["2",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][7] = ["0",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][8] = ["1",1,2,3,4,5,6,7,8,9];
+						//Plateau[partie_actuelle][9] = ["5",1,2,3,4,5,6,7,8,9];
+						// ci-dessous le script concernant un concours basé sur UnPourToutes (recopie d'un bout de script situé plus haut avec seul changement 90 <--> 50 (changement annulé après concertation avec les collègues) et d'un autre situé plus bas)
 						document.getElementById("td_score").style.background="url("+chemin+"fond230_noir_grand.gif)";
 						affichage_score_active = false; // car le span nommé affichage_score n'existe plus pour l'instant
 						var tableau_cibles="<div style='overflow:auto; width:210px; height:60;'><TABLE cellpadding=0 cellspacing=0  border=0><tbody><TR valign='middle' align='center'>";
-						for (var i = (nombres_relatifs*(-90)); i <= 90; i++) {
+						for (var i = 0; i <= 90; i++) {
 							tableau_cibles+="<TD height=50 width=50 background='"+chemin+"fond50.gif'><DIV id='cible_"+i+"' style='width:50px;'><CENTER><span style='font-size: 20pt'><a href='javascript:Change_Nombre_Cible("+i+")'>"+i+"</a></span></CENTER><DIV></TD>";
 						}
 						tableau_cibles+="</TR></tbody></TABLE></div>";
 						document.getElementById("td_score").innerHTML=tableau_cibles;
-					}
-					else { 
-						if (FormChoix.ListeVariantes.selectedIndex == 4) {
-							//2014 CONCOURS CONCOURS CONCOURS CONCOURS CONCOURS CONCOURS CONCOURS si je change de concours alors le plus simple sera peut-être d'ajouter une nouvelle partie "Concours2", de modifier ce qui se passe ici dans ce "if", de laisser "Concours" comme il est en ce moment pour pouvoir le reprendre après mais en contre partie d'ajouter dans la suite ce que doit faire le script quand c'est "Concours2"
-							// Attention je n'ai rien touché ici depuis l'ajout des relatifs, il faudra donc vérifier que cela n'a pas d'incidence en particulier si on coche avant ou pendant la variante concours.
-							// comme il s'agit pour l'instant d'une variante basée sur un pour toutes le seul problème se trouve probablement au niveau du changement de cible quand on arrive à 90 et qu'on passe à la suivante...
-							nombres_relatifs = 0; // le menu déroulant sur le choix des nombres n'est par contre pas modifié donc il peut y avoir un bug si on revient sur une variante alors que les relatifs sont choisis dans le menu
-							// cette ligne ci-dessus devrait régler la plupart des problèmes si jamais j'oublie de corriger vraiment le problème
-							alertbox("INFORMATION :","<CENTER>Vous pouvez participer au concours jusqu'à dimanche 19 mars 20h.<BR/>Il ne faut pas oublier de sauver la partie pour valider la participation.<BR/>Si vous avez déjà sauvegardé une partie 'Concours', il faut commencer<BR/>par la charger sinon la nouvelle écrasera l'ancienne.</CENTER>",180,450);
-							//2015    alertbox("INFORMATION :","<CENTER>Le vrai concours ne commencera que le 14/03/2015.<BR/>En attendant, vous pouvez tester le concours avec cette grille de test.<BR/>Si vous avez déjà sauvegardé une partie 'Concours', il faut commencer<BR/>par la charger sinon la nouvelle écrasera l'ancienne.</CENTER>",200,450);
-							partie_actuelle="Concours";
-							debut_plateau = 1; // je ne devrais pas le passer un jour à 0 mais on ne sais jamais...
-							if (score[partie_actuelle]==0) {
-								nombre_cible[partie_actuelle]=0;
-								Resultat[partie_actuelle] = new Array;
-								Plateau[partie_actuelle] = new Array;
-								for (var c = 0; c <= 9; c++) {
-									Plateau[partie_actuelle][c] = new Array;
-									for (var l = 0; l <= 9; l++) {
-										Resultat[partie_actuelle][l*10+c] = new Array;
-										Resultat[partie_actuelle][l*10+c][0] = 0;
-										Resultat[partie_actuelle][(-1)*(l*10+c)] = new Array;
-										Resultat[partie_actuelle][(-1)*(l*10+c)][0] = 0;
-									}
-								}
-							}
-							// déclaration du plateau fixe colonne par colonne
-							//2014 chercher aussi l'autre 2014
-							Plateau[partie_actuelle][0] = ["","1","2","3","4","5","6","7","8","9"];Plateau[partie_actuelle][1] = ["A",7,7,6,3,7,1,8,2,8];Plateau[partie_actuelle][2] = ["B",1,4,9,9,8,1,2,2,4];Plateau[partie_actuelle][3] = ["C",9,2,6,9,4,1,6,4,6];Plateau[partie_actuelle][4] = ["D",2,5,5,9,5,7,9,3,3];Plateau[partie_actuelle][5] = ["E",4,4,9,7,9,4,3,5,5];Plateau[partie_actuelle][6] = ["F",6,2,9,5,5,7,9,7,4];Plateau[partie_actuelle][7] = ["G",6,6,5,7,6,1,5,5,3];Plateau[partie_actuelle][8] = ["H",5,7,7,8,9,9,6,5,6];Plateau[partie_actuelle][9] = ["I",9,2,5,1,3,2,8,4,7];
-							//Plateau[partie_actuelle][0] = ["","","","T","E","S","T","","",""];
-							//Plateau[partie_actuelle][1] = ["M",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][2] = ["A",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][3] = ["R",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][4] = ["S",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][5] = ["-",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][6] = ["2",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][7] = ["0",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][8] = ["1",1,2,3,4,5,6,7,8,9];
-							//Plateau[partie_actuelle][9] = ["5",1,2,3,4,5,6,7,8,9];
-							// ci-dessous le script concernant un concours basé sur UnPourToutes (recopie d'un bout de script situé plus haut avec seul changement 90 <--> 50 (changement annulé après concertation avec les collègues) et d'un autre situé plus bas)
-							document.getElementById("td_score").style.background="url("+chemin+"fond230_noir_grand.gif)";
-							affichage_score_active = false; // car le span nommé affichage_score n'existe plus pour l'instant
-							var tableau_cibles="<div style='overflow:auto; width:210px; height:60;'><TABLE cellpadding=0 cellspacing=0  border=0><tbody><TR valign='middle' align='center'>";
+						if (score[partie_actuelle]!=0) {
 							for (var i = 0; i <= 90; i++) {
-								tableau_cibles+="<TD height=50 width=50 background='"+chemin+"fond50.gif'><DIV id='cible_"+i+"' style='width:50px;'><CENTER><span style='font-size: 20pt'><a href='javascript:Change_Nombre_Cible("+i+")'>"+i+"</a></span></CENTER><DIV></TD>";
+								if (Resultat[partie_actuelle][i][0] == 1) { document.getElementById("cible_"+i).innerHTML="<CENTER><span style='font-size: 20pt;text-decoration:line-through;'>"+i+"</span></CENTER>"; }
 							}
-							tableau_cibles+="</TR></tbody></TABLE></div>";
-							document.getElementById("td_score").innerHTML=tableau_cibles;
-							if (score[partie_actuelle]!=0) {
-								for (var i = 0; i <= 90; i++) {
-									if (Resultat[partie_actuelle][i][0] == 1) { document.getElementById("cible_"+i).innerHTML="<CENTER><span style='font-size: 20pt;text-decoration:line-through;'>"+i+"</span></CENTER>"; }
-								}
-							}
-							// CONCOURS CONCOURS CONCOURS CONCOURS CONCOURS CONCOURS CONCOURS en cas de changement de genre de concours il y a d'autre lignes à adapter ou à ajouter si l'on créé un Concours2
+						}
 					}
 				}
 			}
@@ -1108,7 +1339,7 @@ function ChangeVariantes() {
 		document.getElementById("td_score").style.background="url("+chemin+"fond230_noir.gif)";
 		document.getElementById("td_score").innerHTML="<span id='affichage_score' style='font-size: 24pt'>"+score[partie_actuelle]+"</span>";
 	}
-	if ((score[partie_actuelle]==0)&&(FormChoix.ListeVariantes.selectedIndex != 4)) { // l'initialisation des variantes concours (quelques soit le score) est faite plus haut de manière à regrouper un maximum les scripts à modifier en cas d'évolution du concours
+	if ((score[partie_actuelle]==0)&&(FormChoix.ListeVariantes.selectedIndex != 4)) { 
 		Resultat[partie_actuelle] = new Array;
 		Plateau[partie_actuelle] = new Array;
 		for (var c = 0; c <= 9; c++) {
@@ -1140,10 +1371,7 @@ function ChangeVariantes() {
 	// 3 lignes suivantes : je préfère effacer tous les jeux de la variante précédente et reconstruire son contenu que de garder en mémoire un exemplaire de tous les contenus des différentes variantes en cours
 	contenu_div_jeux = "";
 	document.getElementById('divJeux').innerHTML = "";
-	var avertissement_affichage=true;
-	if ((Jeux[partie_actuelle][0] > 50)  && (form_divJeux.affichage.checked)) { if (confirm("Avertissement : cette variante comporte déjà plus de 50 trios validés\nlors d'une précédente partie, leur affichage peut entraîner\nun ralentissement de votre navigateur.\nCliquez sur OK si vous voulez vraiment les afficher\n ou Annuler pour n\'afficher que les prochains.")) { avertissement_affichage=true; } else { avertissement_affichage=false;} }
-	else { avertissement_affichage = true; }
-	if ((form_divJeux.affichage.checked) && (avertissement_affichage == true)) { 
+	if (form_divJeux.affichage.checked) { 
 		for (var i = 1; i <= Jeux[partie_actuelle][0]; i++) {
 			var resultat_jeu_i = Plateau[partie_actuelle][Jeux[partie_actuelle][i]["x_nombre1"]][Jeux[partie_actuelle][i]["y_nombre1"]]*Plateau[partie_actuelle][Jeux[partie_actuelle][i]["x_nombre2"]][Jeux[partie_actuelle][i]["y_nombre2"]];
 			if (Jeux[partie_actuelle][i][0]=="+") { resultat_jeu_i += Plateau[partie_actuelle][Jeux[partie_actuelle][i]["x_nombre3"]][Jeux[partie_actuelle][i]["y_nombre3"]]; }
@@ -1188,22 +1416,37 @@ function RecommencerLesParties(relatifs_ou_pas) {
 }
 
 function Sauver() {
-	if ((document.FormChoix.Identifiant.value == "") || (document.FormChoix.Motdepasse.value == "")) {
-		alertbox("AVERTISSEMENT :","<CENTER>Il faut indiquer un identifiant et un mot de passe !</CENTER>",120,350);
+	if ((((document.FormChoix.Identifiant.value == "") || (document.FormChoix.Motdepasse.value == "")) && (partie_actuelle != "Competition")) || ((document.FormCodeCompet.code_compet.value == "") && (partie_actuelle == "Competition"))) {
+		if ((document.FormCodeCompet.code_compet.value == "") && (partie_actuelle == "Competition")) {
+			alertbox("AVERTISSEMENT :","<CENTER>Il faut indiquer un code compétition !</CENTER>",120,350);
+		} else {
+			alertbox("AVERTISSEMENT :","<CENTER>Il faut indiquer un identifiant et un mot de passe !</CENTER>",120,350);
+		}
 	}
 	else {
-		if (score[partie_actuelle]==0) {
+		if (((score[partie_actuelle]==0) && (partie_actuelle!="Classe"))  && (partie_actuelle!="Competition")) {
 			 alertbox("SAUVEGARDE IMPOSSIBLE :","<CENTER>Pour sauvegarder, il faut avoir validé au moins un trio.<BR/> Si c'est une ancienne partie que vous voulez recharger alors<BR/>il faut utiliser le bouton CHARGER à la place du bouton SAUVER.</CENTER>",160,450);
 		}
 		else {
 			TRIOjson.JeuxJson = new Array();
+			TRIOjson.PlateauJson = new Array();
 			for (var c = 0; c <= 9; c++) {
 				TRIOjson.PlateauJson[c] = new Array();
 				for (var l = 0; l <= 9; l++) {
 					TRIOjson.PlateauJson[c][l]=Plateau[partie_actuelle][c][l];
 				}
 			}
-			if (partie_actuelle == "Concours") { TRIOjson.PlateauJson[0][0]= concours_actuel ; } // pour "Concours" pour json c'est la même variante qui servira pour tous les "Concours" je place donc un code dans Plateau[0][0] pour éviter de charger un concours qui n'existe plus
+			if ((partie_actuelle == "Competition") || (Competition)) {
+				if (partie_actuelle == "Competition") { // dans ce cas on est en train de créer un nouveau code compétition
+					TRIOjson.PlateauJson[0][0]= document.FormCodeCompet.code_compet.value ;
+				} else { // sinon c'est qu'on est en train de participer et qu'on sauvegarde
+					TRIOjson.PlateauJson[0][0]= CodeActuel ;
+				}
+				for (var i = 0; i <= 300; i++) { 
+					TRIOjson.PlateauJson[10+i] = Plateau[partie_actuelle][10+i];
+				}
+			}
+			if (partie_actuelle == "Concours") { TRIOjson.PlateauJson[0][0]= concours_actuel ; } 
 			TRIOjson.JeuxJson[0] = Jeux[partie_actuelle][0];
 			for (var i = 1; i <= Jeux[partie_actuelle][0]; i++) {
 				TRIOjson.JeuxJson[i] = new Array();
@@ -1212,8 +1455,17 @@ function Sauver() {
 					TRIOjson.JeuxJson[i] += SigneOperationFois[Jeux[partie_actuelle][i]["fois"]]
 				}
 			}
-			TRIOjson.ScoreJson = score[partie_actuelle];
-			TRIOjson.CibleJson = nombre_cible[partie_actuelle];
+			if (partie_actuelle == "Competition") {
+				TRIOjson.ScoreJson = 0;
+				TRIOjson.CibleJson = 0;
+			} else {
+				TRIOjson.ScoreJson = score[partie_actuelle];
+				if (Competition) {
+					TRIOjson.CibleJson = Num_cible_Compet;
+				} else {
+					TRIOjson.CibleJson = nombre_cible[partie_actuelle];
+				}
+			}
 			ajaxJSONPost(TRIOjson);
 		}
 	}
@@ -1224,32 +1476,40 @@ function Charger() {
 		alertbox("AVERTISSEMENT :","<CENTER>Il faut indiquer un identifiant et un mot de passe !</CENTER>",120,350);
 	}
 	else {
+		var variante_charger = partie_actuelle;
+		if (Competition) {
+			variante_charger = "Competition";
+		}
 		jQuery.post(
 							'charge.php',
 							{
 								login: document.FormChoix.Identifiant.value,
 								pass: md5(document.FormChoix.Motdepasse.value),
-								variante: partie_actuelle,
+								variante: variante_charger,
 								etab:document.FormChoix.ListeEtab.value
 							},
 							function( data ) {
 								if (((data==0) || (data==1)) || (data==2)) {
 									if (data==1) {
-										alertbox("AVERTISSEMENT :","<CENTER>Les identifiants ne sont pas reconnus comme appartenant à l'établissement<BR/> sélectionné et aucune sauvegarde "+partie_actuelle+" n'existe dans l'espace visiteur.</CENTER>",140,420);
+										alertbox("AVERTISSEMENT :","<CENTER>Les identifiants ne sont pas reconnus comme appartenant à l'établissement<BR/> sélectionné et aucune sauvegarde "+variante_charger+" n'existe dans l'espace visiteur.</CENTER>",140,420);
 									}
 									else { 
 										if (data==2) {
-											alertbox("AVERTISSEMENT :","<CENTER>Aucune sauvegarde "+partie_actuelle+" n'existe dans l'espace sélectionné.<BR/> Vérifiez vos identifiants ou sélectionnez un autre établissement.</CENTER>",140,420);
+											alertbox("AVERTISSEMENT :","<CENTER>Aucune sauvegarde "+variante_charger+" n'existe dans l'espace sélectionné.<BR/> Vérifiez vos identifiants ou sélectionnez un autre établissement.</CENTER>",140,420);
 										}
 										else { 
-											alertbox("AVERTISSEMENT :","<CENTER>Les identifiants appartiennent bien à l'établissement sélectionné<BR/>mais aucune sauvegarde n'existe pour cette variante ("+partie_actuelle+").</CENTER>",140,420); 
+											alertbox("AVERTISSEMENT :","<CENTER>Les identifiants appartiennent bien à l'établissement sélectionné<BR/>mais aucune sauvegarde n'existe pour cette variante ("+variante_charger+").</CENTER>",140,420); 
 										}
 									}
 								}
 								else {
 									TRIOjson=data;
-									if ((TRIOjson.PlateauJson[0][0] != "") && (TRIOjson.PlateauJson[0][0] != concours_actuel)) { // avantage de ce test, il est valable pour Concours et aussi pur un futur Concours2..
-										alertbox("AVERTISSEMENT :","<CENTER>Une sauvegarde existe bien mais comme elle ne concerne pas<BR/>le concours actuel, elle ne peut plus être chargée.</CENTER>",140,400);
+									if ((TRIOjson.PlateauJson[0][0] != "") && ( ((!Competition) && (TRIOjson.PlateauJson[0][0] != concours_actuel)) || ((Competition) && (TRIOjson.PlateauJson[0][0] != CodeActuel)) )) { 
+										if (!Competition) { 
+											alertbox("AVERTISSEMENT :","<CENTER>Une sauvegarde existe bien mais comme elle ne concerne pas<BR/>le concours actuel, elle ne peut plus être chargée.</CENTER>",140,400);
+										} else {
+											alertbox("AVERTISSEMENT :","<CENTER>Une sauvegarde existe bien mais comme elle ne correspond pas au code compétition saisi,<BR/> elle ne peut plus être chargée sauf si vous chargez son code compétition.</CENTER>",140,520);
+										}
 									}
 									else {
 										if ((score[partie_actuelle] > TRIOjson.ScoreJson) && (!eviter_alert["charger_score_plus_faible"])){
@@ -1273,8 +1533,6 @@ function Charger() {
 											}
 											if (Plateau[partie_actuelle][0][0] == "") { debut_plateau = 1;} else { debut_plateau = 0;}
 											Jeux[partie_actuelle][0] = TRIOjson.JeuxJson[0];
-											var avertissement_affichage = true;
-											//2015 enlevé pour Alice car c'est une alertbox classique qui peut être bloqué par les navigateur ???        if ((Jeux[partie_actuelle][0] > 50)  && (form_divJeux.affichage.checked)) { if (confirm("Avertissement : l\'affichage des trios est activé et votre\nsauvegarde contenant plus de 50 jeux cela pourrait\nentraîner un ralentissement de votre navigateur.\nCliquez sur OK si vous voulez vraiment afficher tous\nles trios validés, sinon cliquez sur Annuler.")) { avertissement_affichage=true; } else { avertissement_affichage=false; } }
 											for (var i = -90; i <= 90; i++) {Resultat[partie_actuelle][i][0] = 0;}
 											contenu_div_jeux = "";
 											for (var i = 1; i <= Jeux[partie_actuelle][0]; i++) {
@@ -1297,19 +1555,27 @@ function Charger() {
 												else if (Jeux[partie_actuelle][i][0]=="-") { resultat_jeu_i -= Plateau[partie_actuelle][Jeux[partie_actuelle][i]["x_nombre3"]][Jeux[partie_actuelle][i]["y_nombre3"]]; }
 												else if (Jeux[partie_actuelle][i][0]=="x") { resultat_jeu_i *= Plateau[partie_actuelle][Jeux[partie_actuelle][i]["x_nombre3"]][Jeux[partie_actuelle][i]["y_nombre3"]]; }
 												else if (Jeux[partie_actuelle][i][0]==":") { resultat_jeu_i /= Plateau[partie_actuelle][Jeux[partie_actuelle][i]["x_nombre3"]][Jeux[partie_actuelle][i]["y_nombre3"]]; }
-												if ((avertissement_affichage==true) && (form_divJeux.affichage.checked)) { AjouterDivJeux(i,resultat_jeu_i); }
+												if (form_divJeux.affichage.checked) { AjouterDivJeux(i,resultat_jeu_i); }
 												if (Math.abs(resultat_jeu_i)<91) {
 													Resultat[partie_actuelle][resultat_jeu_i][0]++;
 													Resultat[partie_actuelle][resultat_jeu_i][Resultat[partie_actuelle][resultat_jeu_i][0]] = i;
 												}
 											}
-											if ((avertissement_affichage==true) && (form_divJeux.affichage.checked)) {
+											if (form_divJeux.affichage.checked) {
 												document.getElementById('divJeux').innerHTML = "<br/><table border='0'><tbody><tr valign='middle'>"+contenu_div_jeux+"</TR></tbody></table>";
 											}
 											Change_form_divJeux();
 											score[partie_actuelle] = TRIOjson.ScoreJson;
 											ancien_score_sauvee = score[partie_actuelle];
-											nombre_cible[partie_actuelle] = TRIOjson.CibleJson;
+											if (Competition) {
+												for (var i = 0; i <= 300; i++) { 
+													Plateau["Classique"][10+i] = TRIOjson.PlateauJson[10+i];
+												}
+												Num_cible_Compet = TRIOjson.CibleJson;
+												nombre_cible[partie_actuelle] = Plateau["Classique"][10+Num_cible_Compet];
+											} else {
+												nombre_cible[partie_actuelle] = TRIOjson.CibleJson;
+											}
 											if ((partie_actuelle=="UnPourToutes") || (partie_actuelle=="Concours")) {
 												for (var i = (nombres_relatifs*(-90)); i <= 90; i++) {
 													if (Resultat[partie_actuelle][i][0] > 0) { document.getElementById("cible_"+i).innerHTML="<CENTER><span style='font-size: 20pt;text-decoration:line-through;'>"+i+"</span></CENTER>"; }
@@ -1319,8 +1585,8 @@ function Charger() {
 											else {
 												if (partie_actuelle!="Classe") { document.getElementById("affichage_score").firstChild.nodeValue=score[partie_actuelle];}
 											}
-											Effacer();
 											if (((cibles_possibles_uniquement) && (partie_actuelle != "UnPourToutes")) && (partie_actuelle != "Concours")) { ChercherCiblesPossibles(); }
+											Effacer();
 											ChangeTableau();
 										}
 									}
@@ -1367,7 +1633,6 @@ function ChangerResultat() {
 		}
 		else { // Nous sommes alors forcément soit sur UnPourToutes soit sur Concours
 			var limite_unpourtoutes = 90;
-			//2014  if (partie_actuelle=="Concours") { limite_unpourtoutes = 50; }
 			if (score[partie_actuelle]<=(limite_unpourtoutes+(nombres_relatifs*limite_unpourtoutes))) { // Si la partie est terminée la boucle risque de tourner indéfiniment...
 				if (nombre_cible[partie_actuelle]==limite_unpourtoutes) { nombre_cible[partie_actuelle]=(nombres_relatifs*(-90)); }
 				else { nombre_cible[partie_actuelle]++; }
@@ -1441,8 +1706,9 @@ function alert_repartition() {
 }
 
 function ChargeGrille() {
-	// POUR CONCOURS <OPTION VALUE='concours'>Concours</option>
-	var contenu="<table cellpadding=0 cellspacing=0 border=0><tbody><TR valign='middle' align='center'><td width=272><div style='overflow:auto;width:272px;height:520px;'><CENTER><FORM name='FormChoix'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR valign='middle' align='center'><TD height=25 width=270 colspan='2'>Choisir la variante : <SELECT NAME='ListeVariantes' SIZE='1' onChange='ChangeVariantes();'><OPTION SELECTED VALUE='classique'>Classique</option><OPTION VALUE='unpourtoutes'>Un pour toutes</option><OPTION VALUE='touspourune'>Tous pour une</option><OPTION VALUE='classe'>Pour la classe</option></SELECT></TD></TR><TR valign='middle'><TD height=25 width=70>Plateau : </TD><TD height=25 width=190 align='center'><INPUT type='radio' name='radio_taille' value='9x9' onclick='ChangeTaille(9);' checked/>9 x 9 <INPUT type='radio' name='radio_taille' value='7x7' onclick='ChangeTaille(7);'/>7 x 7 coloré</TD></TR><TR valign='middle'><TD height=25 width=70>Nombres : </TD><TD height=25 width=190 align='center'><SELECT NAME='ListeNombres' SIZE=1 onChange='RecommencerLesParties(FormChoix.ListeNombres.selectedIndex);'><OPTION SELECTED VALUE='positifs'>entiers positifs</option><OPTION VALUE='relatifs'>entiers relatifs</option><OPTION VALUE='origine'>du jeu d'origine</option></SELECT></TD></TR><TR valign='middle'><TD height=25 width=60>Cibles : </TD><TD height=30 width=200 align='center'><INPUT type='radio' name='radio_limite_cible' value='50' onclick='limite_default = true;' checked />jusqu'à 50<INPUT type='radio' name='radio_limite_cible' value='90' onclick='limite_default = false;'/>jusqu'à <INPUT type='text' name='limite_cible_form' size=2 value='90'/></TD></TR><TR valign='middle' align='center'><TD height=40 colspan='2'><span style='font-size: 20pt'>SCORE</span></TD></TR><TR valign='middle' align='center'><TD height=80 width=270 colspan='2'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD height=80 width=15></TD><TD id='td_score' height=80 width=230 align='center' background='"+chemin+"fond230_noir.gif'><span id='affichage_score' style='font-size: 24pt'>"+score[partie_actuelle]+"</span></TD><TD height=80 width=15></TD></TR></tbody></table></TD></TR><TR valign='middle' align='center'><TD height=30 width=270 colspan='2'><INPUT type='button' value='CHANGER DE CIBLE' onclick='ChangerResultat();'/></TD></TR><TR valign='middle'><TD width=270 colspan='2'><FIELDSET id='fieldset_sauver_charger' class='fieldsetm'>"+contenu_fieldset_sauver_charger+"</FIELDSET></TD></TR></tbody></table></FORM></CENTER></div></td><td width=510 id='td_grille' align='center'>";
+	var contenu="<table cellpadding=0 cellspacing=0 border=0><tbody><TR valign='middle' align='center'><td width=272><div style='overflow:auto;width:272px;height:520px;'><CENTER><FORM name='FormChoix'><TABLE cellpadding=0 cellspacing=0 border=0><tbody id='tbody_FormChoix'><TR valign='middle' align='center'><TD height=25 width=270 colspan='2'>Choisir la variante : <SELECT NAME='ListeVariantes' SIZE='1' onChange='ChangeVariantes();'><OPTION SELECTED VALUE='classique'>Classique</option><OPTION VALUE='unpourtoutes'>Un pour toutes</option><OPTION VALUE='touspourune'>Tous pour une</option><OPTION VALUE='classe'>Pour la classe</option>";
+	if (concours_ouvert) { contenu+="<OPTION VALUE='concours'>Concours</option>"; }
+	contenu+="</SELECT></TD></TR><TR valign='middle'><TD height=25 width=70>Plateau : </TD><TD height=25 width=190 align='center'><INPUT type='radio' name='radio_taille' value='9x9' onclick='ChangeTaille(9);' checked/>9 x 9 <INPUT type='radio' name='radio_taille' value='7x7' onclick='ChangeTaille(7);'/>7 x 7 coloré</TD></TR><TR valign='middle'><TD height=25 width=70>Nombres : </TD><TD height=25 width=190 align='center'><SELECT NAME='ListeNombres' SIZE=1 onChange='RecommencerLesParties(FormChoix.ListeNombres.selectedIndex);'><OPTION SELECTED VALUE='positifs'>entiers positifs</option><OPTION VALUE='relatifs'>entiers relatifs</option><OPTION VALUE='origine'>du jeu d'origine</option></SELECT></TD></TR><TR valign='middle'><TD height=25 width=60>Cibles : </TD><TD height=30 width=200 align='center'><INPUT type='radio' name='radio_limite_cible' value='50' onclick='limite_default = true;' checked />jusqu'à 50<INPUT type='radio' name='radio_limite_cible' value='90' onclick='limite_default = false;'/>jusqu'à <INPUT type='text' name='limite_cible_form' size=2 value='90'/></TD></TR></tbody></table><span id='span_Compet'></span><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR valign='middle' align='center'><TD height=40 colspan='2'><span style='font-size: 20pt'>SCORE</span></TD></TR><TR valign='middle' align='center'><TD height=80 width=270 colspan='2'><TABLE cellpadding=0 cellspacing=0 border=0><tbody><TR><TD height=80 width=15></TD><TD id='td_score' height=80 width=230 align='center' background='"+chemin+"fond230_noir.gif'><span id='affichage_score' style='font-size: 24pt'>"+score[partie_actuelle]+"</span></TD><TD height=80 width=15></TD></TR></tbody></table></TD></TR><TR valign='middle' align='center'><TD height=30 width=270 colspan='2'><INPUT type='button' value='CHANGER DE CIBLE' onclick='ChangerResultat();'/></TD></TR><TR valign='middle'><TD width=270 colspan='2'><FIELDSET id='fieldset_sauver_charger' class='fieldsetm'>"+contenu_fieldset_sauver_charger+"</FIELDSET></TD></TR></tbody></table></FORM></CENTER></div></td><td width=510 id='td_grille' align='center'>";
 	for (var l = 0; l <= fin_plateau; l++) {
 		contenu+="";
 		for (var c = 0; c <= fin_plateau; c++) {
@@ -1525,7 +1791,7 @@ function mClick(image,i,j) {
 		else {
 			if ((Operation["x_nombre"+etape]==i)&&(Operation["y_nombre"+etape]==j)) {
 				if (etape==1) {
-					if (document.FormPrio.radio_prio[1].checked) { foisClick(window.document.images["image_fois"]); }
+					if ((document.FormPrio.radio_prio[1].checked) && (!Competition) && (partie_actuelle != "Concours")) { foisClick(window.document.images["image_fois"]); }
 					else {
 						if (effacage_auto) { Effacer(); }
 						else {
@@ -1674,7 +1940,7 @@ function mClick(image,i,j) {
 }
 
 function plusmoinsClick(image) {
-	if (document.FormPrio.radio_prio[1].checked) {
+	if ((document.FormPrio.radio_prio[1].checked) && (!Competition) && (partie_actuelle != "Concours")) {
 		if ((Operation[0]=="0")||(Operation[0]=="x")) {
 			image.src=chemin+"plus.gif";
 			Operation[0]="+";
@@ -1710,22 +1976,31 @@ function plusmoinsClick(image) {
 }
 
 function foisClick(image) {
-	if (document.FormPrio.radio_prio[1].checked) {
+	if ((document.FormPrio.radio_prio[1].checked) && (!Competition) && (partie_actuelle != "Concours")) {
 		Operation["fois"] = (Operation["fois"]+1) % 4;
 		image.src=chemin+Operation["fois"]+".png";
 	}
 }
 
 function ChangePrio(nb) {
-	if (nb == 0) {
-		Operation["fois"] = 0;
-		window.document.images["image_fois"].src = chemin+"0.png";
-		Operation[0] = "0";
-		window.document.images["image_plusmoins"].src=chemin+"plusmoins.gif";
-		window.document.images["image_fois"].src = chemin+"0.png";
-	}
-	else {
-		alertbox("INFORMATION :","<CENTER>Vous pouvez à présent choisir librement parmi les 4 opérations<BR/> mais si votre trio ne commence par une multiplication ou n'est pas suivi d'une addition<BR/> ou d'une soustraction alors il ne vous rapportera qu'un seul point.</CENTER>",150,500);
+	if (((Competition) || (partie_actuelle == "Concours")) && (nb == 1)) {
+		document.forms.FormPrio.radio_prio[0].checked = true;
+		if (Competition) {
+			alertbox("AVERTISSEMENT :","<CENTER>Cette option n'est pas valable en mode Compétition.</CENTER>",140,300); 
+		} else {
+			alertbox("AVERTISSEMENT :","<CENTER>Cette option n'est pas valable avec la variante Concours.</CENTER>",140,320); 
+		}
+	} else {
+		if (nb == 0) {
+			Operation["fois"] = 0;
+			window.document.images["image_fois"].src = chemin+"0.png";
+			Operation[0] = "0";
+			window.document.images["image_plusmoins"].src=chemin+"plusmoins.gif";
+			window.document.images["image_fois"].src = chemin+"0.png";
+			document.forms.FormPrio.radio_prio[0].checked = true;
+		} else {
+			alertbox("INFORMATION :","<CENTER>Vous pouvez à présent choisir librement parmi les 4 opérations<BR/> mais si votre trio ne commence par une multiplication ou n'est pas suivi d'une addition<BR/> ou d'une soustraction alors il ne vous rapportera qu'un seul point.</CENTER>",150,500);
+		}
 	}
 }
 
