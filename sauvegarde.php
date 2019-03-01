@@ -1,6 +1,9 @@
 <?php
 	$chemin_data='data/';	
 	$json = json_decode(preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $_POST["jsondatapost"]), true);
+	if ($json === null && json_last_error() !== JSON_ERROR_NONE) {
+             exit("Json illisible");
+	}
 	$lelogin = preg_replace('/[^a-zA-Z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ.]+/', '', $_POST["login"]);
 	$lepass = preg_replace('/[^a-zA-Z0-9.]+/', '', $_POST["pass"]);
 	$lavariante=preg_replace('/[^a-zA-Z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ.]+/', '', $_POST["variante"]);
@@ -105,9 +108,10 @@ if ((!empty($json))&&(!empty($lelogin))&&(!empty($lepass))&&(!empty($lavariante)
 		file_put_contents($chemin_data."logs.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$lelogin.$inscrit." depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
 	} else {
 		if (strcasecmp($lavariante,"Competition")==0){
-			file_put_contents($chemin_data."sourcescompetitions/".$json["PlateauJson"][0][0].".csv",$lelogin.$inscrit.";".$json["ScoreJson"].";".strftime("%d/%m/%y à %H:%M:%S")."\r\n",FILE_APPEND);
+			$nomfichiercsv=preg_replace('/[^a-zA-Z0-9.]+/', '',$json["PlateauJson"][0][0]);
+			file_put_contents($chemin_data."sourcescompetitions/".$nomfichiercsv.".csv",$lelogin.$inscrit.";".strip_tags ($json["ScoreJson"]).";".strftime("%d/%m/%y à %H:%M:%S")."\r\n",FILE_APPEND);
 		} else {
-			file_put_contents($chemin_data."logs.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$lelogin.$inscrit." a sauvé ".$lavariante." (score=".$json["ScoreJson"].") depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
+			file_put_contents($chemin_data."logs.txt", strftime("Le %A %d %B à %H:%M:%S")." -> ".$lelogin.$inscrit." a sauvé ".$lavariante." (score=".strip_tags($json["ScoreJson"]).") depuis l'IP ".getenv('REMOTE_ADDR')." avec ".$_SERVER[ 'HTTP_USER_AGENT']."\r\n",FILE_APPEND);
 		}
 	}
 

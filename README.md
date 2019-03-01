@@ -45,3 +45,7 @@ Version 2.0 du 12 02 2018
 Version 2.1 du 12 04 2018
 * Concours 2018 + Corrections petits bugs
 * Mode Compétition : Création, Chargement, Sauvegarde et consultation des scores
+
+Version 2.2 du 01 03 2019
+* Corrections petites failles potentielles dans sauvegarde.php
+* Concours 2019
